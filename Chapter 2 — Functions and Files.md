@@ -1,3 +1,25 @@
+﻿---
+tags:
+  - cpp/functions
+  - cpp/files
+  - cpp/preprocessing
+  - cpp/namespace
+  - cpp/scope
+  - concept
+  - syntax
+  - chapter
+aliases:
+  - Functions and Files
+  - Ch2
+up: LearnCPP
+related:
+  - "[[Functions]]"
+  - "[[Pass by Value]]"
+  - "[[Preprocessing]]"
+  - "[[Namespaces]]"
+  - "[[Header Files]]"
+---
+1
 # Chapter 2 —  Functions and Files
 
 Pin: No
@@ -19,8 +41,8 @@ Last edited: April 17, 2026 2:27 PM
             - `#include <cstdlib> // for EXIT_SUCCESS and EXIT_FAILURE`
         - Your `main` function should return the value `0` if the program ran normally.
             - The function `main()` will implicitly return the value `0` if no return statement is provided.
-- **Arguments and Parameters**
-    - Value of each of the arguments is *copied* into the matching parameter (using copy initialization)
+- **[[Pass by Value|Arguments and Parameters]]**
+    - Value of each of the arguments is *copied* into the matching parameter (using [[Initialization|copy initialization]])
         - **pass by value**
         - **value parameters**
     - A parameter without a name is called an **unnamed parameter**
@@ -31,13 +53,13 @@ Last edited: April 17, 2026 2:27 PM
         }
         ```
         
-- **Local Scopes**
+- **[[Functions|Local Scopes]]**
     - Most often, local variables are created when the function is entered, and destroyed in the opposite order of creation when the function is exited.
-    - If the object is a class type object, prior to destruction, a special function called a destructor is invoked. (No cost in many cases)
-        - At some point after destruction, the memory used by the object will be **deallocated** (freed up for reuse).
-- Return by value returns a temporary object (that holds a copy of the return value) to the caller.
+    - If the object is a class type object, prior to destruction, a special function called a [[Destructors|destructor]] is invoked. (No cost in many cases)
+        - At some point after destruction, the [[Memory Model|memory]] used by the object will be **deallocated** (freed up for reuse).
+- [[Return by Value|Return by value]] returns a temporary object (that holds a copy of the return value) to the caller.
     - In modern C++ (especially C++17), the compiler will often skip creating the temporary and just initialize the variable directly with the return value.
-- **Forward Declaration**
+- **[[Functions|Forward Declaration]]**
     - A **forward declaration** allows us to tell the compiler about the existence of an identifier *before* actually defining the identifier.
         - Forward declarations are used to tell the compiler about the existence of some function that has been defined in a different code file.
         
@@ -71,17 +93,17 @@ Last edited: April 17, 2026 2:27 PM
         | Definition | Implements a function or instantiates a variable.Definitions are also declarations. | void foo() { } // function definition (has body)int x; // variable definition |
         | Pure declaration | A declaration that isn’t a definition. | void foo(); // function forward declaration (no body) |
         | Initialization | Provides an initial value for a defined object. | int x { 2 }; // x is initialized to value 2 |
-    - **One definition rule**
+    - **[[One Definition Rule]]**
 - **Compiling Multiple Files**
     - Reader “geo” reports that you can have VS Code automatically compile all .cpp files in the directory by replacing `"${file}",` with `"${fileDirname}\\**.cpp"` (on Windows).
     - If you wish to be explicit about what files get compiled, replace `"${file}",` with the name of each file you wish to compile, one per line, like this: `"main.cpp", "add.cpp",`
-- **Namespace**
+- **[[Namespaces]]**
     - A name declared within a scope region (such as a namespace) is distinct from any identical name declared in another scope.
     - In C++, any name that is not defined inside a class, function, or a namespace is considered to be part of an implicitly-defined namespace called the **global namespace** (sometimes also called **the global scope**).
     - When you use an identifier that is defined inside a non-global namespace (e.g. the `std` namespace), you need to tell the compiler that the identifier lives inside the namespace.
     - When an identifier includes a namespace prefix, the identifier is called a **qualified name**.
     - Avoid using-directives (such as `using namespace std;`) at the top of your program or in header files.
-- Preprocessing
+- [[Preprocessing]]
     - All changes made by the preprocessor happen either temporarily in memory or using temporary files.
     - When the preprocessor has finished processing a code file, the result is called a **translation unit**.
     - **Preprocessor directives** (often just called *directives*) are instructions that start with a *#* symbol and end with a newline (NOT a semicolon).
@@ -99,7 +121,7 @@ Last edited: April 17, 2026 2:27 PM
             
         - Macro names should be written in all uppercase letters, with words separated by underscores.
         - Avoid macros with substitution text unless no viable alternatives exist.
-    - **Conditional compilation**
+    - **[[Conditional Compilation]]**
         - *#ifdef*, *#ifndef*, and *#endif*.
             
             ```cpp
@@ -127,14 +149,12 @@ Last edited: April 17, 2026 2:27 PM
             - *Use #if 0* to exclude a block of code from being compiled (as if it were inside a comment block)
             - # Doesn’t care about the scope where it was defined.
             - Directives are only valid from the point of definition to the end of the file in which they are defined.
-- **Header Files**
+- **[[Header Files]]**
     - Header files allow us to put declarations in one place and then import them wherever we need them
     - *Two Parts:*
         - *Header guard*
         - *The actual contents*
     - Basic diagram of including headers
-        
-        ![image.png](image.png)
         
     - When we use angled brackets, we’re telling the preprocessor that this is a header file we didn’t write ourselves.
     - For double quotes: The preprocessor will first search for the header file in the current directory.
@@ -148,7 +168,7 @@ Last edited: April 17, 2026 2:27 PM
         - Other headers from the same project (e.g. `#include "mymath.h"`)
         - 3rd party library headers (e.g. `#include <boost/tuple/tuple.hpp>`)
         - Standard library headers (e.g. `#include <iostream>`)
-    - **Header Guards**
+    - **[[Header Files|Header Guards]]**
         
         ```cpp
         #ifndef SOME_UNIQUE_NAME_HERE

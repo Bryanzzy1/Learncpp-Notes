@@ -1,3 +1,20 @@
+﻿---
+tags:
+  - cpp/basics
+  - cpp/initialization
+  - cpp/io
+  - concept
+  - syntax
+  - chapter
+aliases:
+  - C++ Basics
+  - Ch1
+up: LearnCPP
+related:
+  - "[[Initialization]]"
+  - "[[IO]]"
+---
+
 # Chapter 1 — C++ Basics
 
 Pin: No
@@ -8,9 +25,9 @@ Last edited: April 14, 2026 7:03 PM
 
 ## Notes
 
-- **Initialization**
+- **[[Initialization]]**
     - Default-initialization and copy-initialization have fallen out of favor in modern C++ due to inefficient initialization for complex types compared to other initializations
-        - Direct initialization is also used when values are explicitly cast to another type (e.g., via `static_cast`).
+        - Direct initialization is also used when values are explicitly cast to another type (e.g., via [[static_cast]]).
             
             ```cpp
             int a;         // default-initialization (no initializer)
@@ -41,15 +58,15 @@ Last edited: April 14, 2026 7:03 PM
         - Reference initialization (see 12.3 -- Lvalue references).
         - Static-initialization, constant-initialization, and dynamic-initialization (see 7.8 -- Why (non-const) global variables are evil).
         
-- **Instantiation**
-    - **Instantiation** is a fancy word that means a variable has been created (allocated) and initialized (this includes default initialization)
+- **[[Initialization|Instantiation]]**
+    - **[[Initialization|Instantiation]]** is a fancy word that means a variable has been created (allocated) and initialized (this includes default initialization)
         - The `[[maybe_unused]]` The attribute should only be applied selectively to variables that have a specific and legitimate reason for being unused
     
     ```cpp
     [[maybe_unused]] double pi { 3.14159 };  // Don't complain if pi is unused
     ```
     
-- **I/O**
+- **[[IO|I/O]]**
     - Output a newline **`std::endl`** whenever a line of output is complete.
     - **`std::cout` and `std::cin`**is buffered
         - Periodically, the buffer is **flushed,** meaning all of the data collected in the buffer is transferred to its destination (in this case, the console).
@@ -57,12 +74,12 @@ Last edited: April 14, 2026 7:03 PM
         - use **`\n`** to avoid flushing the buffer **(PREFERRED)**
         - Leading whitespace characters (spaces, tabs, and newlines at the front of the buffer) are discarded from the input buffer.
         - If the extraction fails after `>>` extracted, the object being extracted to is copy-assigned the value `0` (as of C++11), and any future extractions will immediately fail (until `std::cin` is cleared).
-- **Initializaition**
+- **[[Initialization|Initializaition]]**
     - Initialized = The object is given a known value at the point of definition.
     - Assignment = The object is given a known value beyond the point of definition.
     - Uninitialized = The object has not been given a known value yet.
     - Using an uninitialized variable will cause the computer to assign it some unused memory (Unknown/unexpected results)
-- Avoid implementation-defined and unspecified behavior whenever possible, as they may cause your program to malfunction on other implementations.
+- Avoid [[Undefined Behavior|implementation-defined and unspecified behavior]] whenever possible, as they may cause your program to malfunction on other implementations.
 - In C++, the term “*side effect*” has a different meaning: it is an observable effect of an operator or function beyond producing a return value.
     - Both `operator=` and `operator<<` (when used to output values to the console) return their left operand. Thus, `x = 5` returns `x`, and `std::cout << 5` returns `std::cout`. This is done so that these operators can be chained.
         - For example, `x = y = 5` evaluates as `x = (y = 5)`. First `y = 5` assigns `5` to `y`. This operation then returns `y`, which can then be assigned to `x`.

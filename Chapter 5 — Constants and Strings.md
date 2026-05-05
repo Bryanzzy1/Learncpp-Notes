@@ -1,3 +1,26 @@
+﻿---
+tags:
+  - cpp/constants
+  - cpp/constexpr
+  - cpp/strings
+  - cpp/optimization
+  - cpp/literals
+  - concept
+  - syntax
+  - best-practice
+  - chapter
+aliases:
+  - Constants and Strings
+  - Ch5
+up: LearnCPP
+related:
+  - "[[Constants]]"
+  - "[[Literals]]"
+  - "[[Compile-time Evaluation]]"
+  - "[[constexpr]]"
+  - "[[Strings]]"
+---
+
 # Chapter 5 — Constants and Strings
 
 Pin: No
@@ -8,15 +31,15 @@ Last edited: April 24, 2026 6:43 PM
 
 ## Notes
 
-- **Constants**
+- **[[Constants]]**
     - A value that may not be changed during the program’s execution.
     - **Named constants** are constant values that are associated with an identifier. These are also sometimes called **symbolic constants**.
     - **Literal constants** are constant values that are not associated with an identifier.
     - There are three ways to define a named constant in C++:
         - Constant variables
-            - Const variables *must* be initialized when you define them
+            - Const variables *must* be [[Initialization|initialized]] when you define them
             - The initializer of a const variable can be a non-constant value.
-            - Function parameters can be made constants
+            - [[Pass by Value|Function parameters]] can be made constants
                 - `void printInt(const int x)`
                 - Don’t use `const` for value parameters.
             - **Const return values**
@@ -24,10 +47,10 @@ Last edited: April 24, 2026 6:43 PM
                 - Don’t use `const` when returning by value.
         - Object-like macros with substitution text
             - `#define MY_NAME "Alex"`
-                - When the preprocessor processes the file containing this code, it will replace `MY_NAME` (on line 7) with `"Alex"`.
+                - When the [[Preprocessing|preprocessor]] processes the file containing this code, it will replace `MY_NAME` (on line 7) with `"Alex"`.
             - **Prefer constant variables to preprocessor macros**
         - Enumerated constants
-    - ***Type Qualifiers***
+    - ***[[Constants|Type Qualifiers]]***
         - A **type qualifier** (sometimes called a **qualifier** for short) is a keyword that is applied to a type that modifies how that type behaves.
             - The `const` used to declare a constant variable is declared using a **const type qualifier** (or **const qualifier** for short).
         - As of C++23, C++ only has two type qualifiers: `const` and `volatile`.
@@ -38,7 +61,7 @@ Last edited: April 24, 2026 6:43 PM
                 - A **cv-qualified** type is a type with one or more type qualifiers applied (e.g. `const int`).
                 - A **possibly cv-qualified** type is a type that may be cv-unqualified or cv-qualified.
                 - NOT SOMETHING TO REMEMBER
-- **Literals**
+- **[[Literals]]**
     - All literals have a type.
         - The type of a literal is deduced from the literal’s value.
     - ***Literal suffix***
@@ -76,7 +99,7 @@ Last edited: April 24, 2026 6:43 PM
         double d { 4.1 }; // change variable to type double so it matches the literal type double
         ```
         
-    - ***Binary Literals***
+    - ***[[Literals|Binary Literals]]***
         - In C++14 onward, we can use binary literals by using the 0b prefix:
         `bin = 0b1;       // assign binary 0000 0000 0000 0001 to the variable`
         - C++14 also adds the ability to use a quotation mark (‘) as a digit separator.
@@ -122,7 +145,7 @@ Last edited: April 24, 2026 6:43 PM
             }
             ```
             
-- **The as-if rule and compile-time optimization**
+- **[[Compile-time Evaluation|The as-if rule and compile-time optimization]]**
     - Modern C++ compilers are optimizing compilers, meaning they are capable of automatically optimizing your programs as part of the compilation process.
         - The **as-if rule** says that the compiler can modify a program however it likes in order to produce more optimized code, so long as those modifications do not affect a program’s “observable behavior”.
     - C**ompile-time evaluation**
@@ -136,7 +159,7 @@ Last edited: April 24, 2026 6:43 PM
             - **Dead code elimination**
                 - The compiler removes code that may be executed but has no effect on the program’s behavior.
                 - When a variable is removed from a program because it is no longer needed, we say the variable has been **optimized out** (or **optimized away**)
-        - Debug builds will typically leave optimizations turned off
+        -[[Debugging|Debug builds]] will typically leave optimizations turned off
     - **Compile-time constants vs runtime constants**
         - A **compile-time constant** is a constant whose value is known at compile-time.
             - Literals.
@@ -161,7 +184,7 @@ Last edited: April 24, 2026 6:43 PM
         [[maybe_unused]] const int h { pass(5) }; // return value isn't known until runtime
     ```
     
-- **Constant expressions**
+- **[[constexpr|Constant expressions]]**
     - A **constant expression** is a non-empty sequence of literals, constant variables, operators, and function calls, all of which must be evaluatable at compile-time.
         - The initializer of a constexpr variable
             - `constexpr`
@@ -170,7 +193,7 @@ Last edited: April 24, 2026 6:43 PM
                 - Require an initializer that can be evaluated at compile-time:
                 - `constexpr int x { expr }; // Because variable x is constexpr, expr must be evaluatable at compile-time`
                 - `constexpr` works for variables with non-integral types
-                - **Constexpr Functions**
+                - **[[constexpr Functions]]**
                     - Can be called in a constant expression
                     - All arguments must be constant expressions
         - The initializer of a constexpr variable
@@ -178,25 +201,25 @@ Last edited: April 24, 2026 6:43 PM
     - The use of language features that result in compile-time evaluation is called **compile-time programming**.
         - Compile-time evaluation allows us to write programs that are both more performant and of higher quality
     - An expression that is not a constant expression is often called a non-constant expression, and may informally be called a **runtime expression**
-- **std::string**
+- **[[Strings|std::string]]**
     - `#include <string>`
         - `std::string name { "Alex" }; // initialize name with string literal "Alex"`
     - `std::string` can store strings of different lengths
     - `operator>>` only returns characters up to the first whitespace it encounters.
         - **Use `std::getline()` to input text**
             - `std::getline(std::cin, name);`
-    - `std::ws`
-        - tells `std::cin` to ignore any leading whitespace before extraction.
+    - [[getline|`std::ws`]]
+        - tells [[IO|std::cin]] to ignore any leading whitespace before extraction.
         - `std::getline(std::cin >> std::ws, name);`
     - ***name.length()***
         - *member function*
             - With member functions, we call `object.function()`.
-        - `std::string::length()` returns an unsigned integral value (most likely of type `size_t`)
-            - `int length { static_cast<int>(name.length()) };`
+        - `std::string::length()` returns an unsigned integral value (most likely of type [[size_t]])
+            - `int length { [[static_cast|static_cast]]<int>(name.length()) };`
             - In C++20, you can also use the `std::ssize()` function to get the length of a `std::string` as a large signed integral type (usually `std::ptrdiff_t`)
     - We can create string literals with type `std::string` by using a `s` suffix after the double-quoted string literal. The `s` must be lower case.
         - `"Hello"s` resolves to `std::string { "Hello", 5 }` which creates a temporary `std::string` initialized with C-style string literal “Hello” (which has a length of 5, excluding the implicit null-terminator).
-    - ***std::string_view***
+    - ***[[Strings|std::string_view]]***
         - Introduced in C++17
         - Provides read-only access to an *existing* string (a C-style string, a `std::string`, or another `std::string_view`) without making a copy.
         - Prefer `std::string_view` over `std::string` when you need a read-only string, especially for function parameters.

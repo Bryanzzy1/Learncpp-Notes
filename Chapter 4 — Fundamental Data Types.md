@@ -1,3 +1,29 @@
+﻿---
+tags:
+  - cpp/types
+  - cpp/memory
+  - cpp/integers
+  - cpp/floats
+  - cpp/casting
+  - concept
+  - syntax
+  - chapter
+aliases:
+  - Fundamental Data Types
+  - Data Types
+  - Ch4
+up: LearnCPP
+related:
+  - "[[Memory Model]]"
+  - "[[Fundamental Data Types]]"
+  - "[[Integers]]"
+  - "[[Floating Point]]"
+  - "[[Boolean]]"
+  - "[[Char]]"
+  - "[[size_t]]"
+  - "[[static_cast]]"
+---
+
 # Chapter 4 — Fundamental Data Types
 
 Pin: No
@@ -8,17 +34,15 @@ Last edited: April 22, 2026 1:17 PM
 
 ## Notes
 
-- **Memory**
+- **[[Memory Model|Memory]]**
     - Memory is organized into sequential units called **memory addresses**
     - The following picture shows some sequential memory addresses, along with the corresponding byte of data:
-        
-        ![image.png](image.png)
         
     - When you give an object a value:
         - The compiler and CPU take care of encoding your value into the appropriate sequence of bits for that data type
         - Then stored in memory (remember: memory can only store bits).
     - Every time we define an object, a small portion of that free memory is used for as long as the object is in existence.
-- **Fundamental data types**
+- **[[Fundamental Data Types|Fundamental data types]]**
     
     
     | **Types** | **Category** | **Meaning** | **Example** |
@@ -37,7 +61,7 @@ Last edited: April 22, 2026 1:17 PM
         - A byte must be at least 8 bits.
         - The integral types `char`, `short`, `int`, `long`, and `long long` have a minimum size of 8, 16, 16, 32, and 64 bits respectively.
         - `char` and `char8_t` are exactly 1 byte (at least 8 bits).
-        - When we talk about the size of a type, we really mean the size of an instantiated object of that type.
+        - When we talk about the size of a type, we really mean the size of an [[Initialization|instantiated]] object of that type.
         
         | **Category** | **Type** | **Minimum Size** | **Typical Size** |
         | --- | --- | --- | --- |
@@ -63,16 +87,16 @@ Last edited: April 22, 2026 1:17 PM
             - `std::size_t` is actually a typedef.
             - The byte size of an object can be no larger than the largest value `std::size_t` can hold.
             - Creating an object with a size (in bytes) larger than the largest value an object of type `std::size_t` can hold is invalid (and will cause a compile error).
-    - ***Signed Ints***
+    - ***[[Integers|Signed Ints]]***
         - By default, integers in C++ are **signed**
         - An n-bit signed variable has a range of -(2^(n-1)) to (2^(n-1))-1.
         - Attempts to create a value outside the range that can be represented this is called **integer overflow** (or **arithmetic overflow**).
-    - ***Unsinged Ints***
+    - ***[[Integers|Unsigned Ints]]***
         - If an unsigned value is out of range, it is divided by one greater than the largest number of the type, and only the remainder is kept.
         - Favor signed numbers over unsigned numbers for holding quantities (even quantities that should be non-negative) and mathematical operations. Avoid mixing signed and unsigned numbers.
-    - ***Overflow***
+    - ***[[Integers|Overflow]]***
         - “If during the evaluation of an expression, the result is not mathematically defined or not in the range of representable values for its type, the behavior is undefined”.
-    - ***Fixed-width integers***
+    - ***[[Integers|Fixed-width integers]]***
         
         
         | **Name** | **Fixed Size** | **Fixed Range** | **Notes** |
@@ -87,12 +111,12 @@ Last edited: April 22, 2026 1:17 PM
         | std::uint64_t | 8 byte unsigned | 0 to 18,446,744,073,709,551,615 |  |
         - Use a fixed-width integer type when you need an integral type that has a guaranteed range.
         - Modern compilers typically treat `std::int8_t` and `std::uint8_t` (and the corresponding fast and least fixed-width types) the same as `signed char` and `unsigned char` respectively.
-    - ***Fast and least integral types***
+    - ***[[Integers|Fast and least integral types]]***
         - `std::int_fast32_t` will give you the fastest signed integer type that’s at least 32 bits. By fastest, we mean the integral type that can be processed most quickly by the CPU.
         - `std::uint_least32_t` will give you the smallest unsigned integer type that’s at least 32 bits.
         - Avoid the fast, least-integral types because they may exhibit different behavior on architectures where they resolve to different sizes.
     - Here for best practices with ints: https://www.learncpp.com/cpp-tutorial/fixed-width-integers-and-size-t/
-    - ***Floats***
+    - ***[[Floating Point|Floats]]***
         
         
         | **C++ Type** | **Typical Size** |
@@ -108,13 +132,13 @@ Last edited: April 22, 2026 1:17 PM
             - **Inf**, which represents infinity. Inf is signed, and can be positive (+Inf) or negative (-Inf).
             - **NaN**, which stands for “Not a Number”. There are several different kinds of NaN (which we won’t discuss here).
             - Signed zero, meaning there are separate representations for “positive zero” (+0.0) and “negative zero” (-0.0).
-    - **Boolean**
+    - **[[Boolean]]**
         - `bool b3 {}; // default initialize to false`
         - They evaluate to the integers `0` (false) or `1` (true).
-            - When we print Boolean values, `std::cout` prints `0` for `false`, and `1` for `true`
+            - When we print Boolean values, [[IO|std::cout]] prints `0` for `false`, and `1` for `true`
             - Use `std::boolalpha` to print `true` or `false`
             - By default, `std::cin` only accepts numeric input for Boolean variables: `0` is `false`, and `1` is `true`.
-    - **Char**
+    - **[[Char]]**
         - When using std::cout to print a char, std::cout outputs the char variable as an ASCII character
         - Char is defined by C++ to always be 1 byte in size.
         - A signed char can hold a number between -128 and 127. An unsigned char can hold a number between 0 and 255.
@@ -137,7 +161,7 @@ Last edited: April 22, 2026 1:17 PM
             | Hex number | \x(number) | Translates into char represented by hex number |
         - Text between double quotes (e.g. “Hello, world!”) is treated as a C-style string literal, which can contain multiple characters.
             - Avoid multicharacter literals (e.g. `'56'`).
-- **Type Casting**
+- **[[static_cast|Type Casting]]**
     - When the compiler does type conversion on our behalf without us explicitly asking, we call this **implicit type conversion**.
         - Some advanced type conversions (e.g. those involving `const_cast` or `reinterpret_cast`) do not return temporary objects, but instead reinterpret the type of an existing value or object.
     - To perform an explicit type conversion, in most cases we’ll use the `static_cast` operator.

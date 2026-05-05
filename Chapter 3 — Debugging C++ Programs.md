@@ -1,3 +1,19 @@
+﻿---
+tags:
+  - cpp/debugging
+  - cpp/tools
+  - cpp/io
+  - best-practice
+  - chapter
+aliases:
+  - Debugging C++ Programs
+  - Ch3
+up: LearnCPP
+related:
+  - "[[Debugging]]"
+  - "[[IO]]"
+---
+
 # Chapter 3 — Debugging C++ Programs
 
 Pin: No
@@ -8,22 +24,22 @@ Last edited: April 19, 2026 11:28 PM
 
 ## Notes
 
-- When printing information for debugging purposes, use `std::cerr` instead of `std::cout`.
+- When printing information for debugging purposes, use `std::cerr` instead of [[IO|std::cout]].
     - Unbuffered
-- **Logger**
+- **[[Debugging|Logger]]**
     - A **log** is a sequential record of events that have happened, usually time-stamped.
         - The process of generating a log is called **logging**.
         - Logs are written to a file on disk
     - `std::clog`
         - Better off using one of the many existing third-party logging tools available.
             - One option is plog
-- **Debugger**
+- **[[Debugging|Debugger]]**
     - ***Stepping***
         - **Step into**
             - Executes the next statement in the normal execution path of the program, and then pauses execution of the program.
         - **Step over**
             - Executes the next statement in the normal execution path of the program.
-            - *Step over* will execute an entire function without stopping and return control to you after the function has been executed.
+            - *Step over* will execute an entire [[Functions|function]] without stopping and return control to you after the function has been executed.
         - **Step out**
             - Executes all remaining code in the function currently being executed, and then returns control to you when the function has returned.
     - ***Running and breakpoints***
@@ -47,7 +63,7 @@ Last edited: April 19, 2026 11:28 PM
         - A list of all the active functions that have been called to get to the current point of execution.
             - The line numbers after the function names show the next line to be executed in each function.
         - 
-- Use a static analysis tool on your programs to help find areas where your code is non-compliant with best practices.
+- Use a [[Static Analysis|static analysis tool]] on your programs to help find areas where your code is non-compliant with best practices.
     - [clang-tidy](https://clang.llvm.org/extra/clang-tidy/)
     - [cpplint](https://github.com/cpplint/cpplint)
     - [cppcheck](https://cppcheck.sourceforge.io/)
