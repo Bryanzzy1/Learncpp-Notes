@@ -4,13 +4,14 @@ tags:
   - cpp/linkage
   - concept
   - syntax
+  - subnode
 aliases:
   - storage class specifier
   - extern specifier
   - static specifier
   - thread_local
   - mutable
-up: "[[Chapter 7 — Scope, duration, and linkage]]"
+up: "[[Internal Linkage]]"
 related:
   - "[[Internal Linkage]]"
   - "[[External Linkage]]"

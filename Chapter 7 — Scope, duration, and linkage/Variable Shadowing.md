@@ -4,14 +4,16 @@ tags:
   - cpp/variables
   - concept
   - best-practice
+  - subnode
 aliases:
   - name hiding
   - variable hiding
-up: "[[Chapter 7 — Scope, duration, and linkage]]"
+up: "[[Block Scope]]"
 related:
   - "[[Block Scope]]"
   - "[[Global Variables]]"
   - "[[Local Variables]]"
+  - "[[Undefined Behavior]]"
 ---
 
 # Variable Shadowing
@@ -44,6 +46,6 @@ void foo()
 
 ## Best practice
 
-**Avoid variable shadowing.** It introduces confusion about which variable is being modified and can hide bugs.
+**Avoid variable shadowing.** It introduces confusion about which variable is being modified and can hide bugs — in subtle cases it can contribute to [[Undefined Behavior]].
 
 > Full coverage: [[Chapter 7 — Scope, duration, and linkage]] → Variable Shadowing

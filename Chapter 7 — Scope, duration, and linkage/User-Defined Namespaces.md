@@ -11,6 +11,7 @@ aliases:
   - nested namespaces
 up: "[[Chapter 7 — Scope, duration, and linkage]]"
 related:
+  - "[[Namespaces]]"
   - "[[Using Declarations and Directives]]"
   - "[[Unnamed and Inline Namespaces]]"
   - "[[Internal Linkage]]"
@@ -18,7 +19,7 @@ related:
 
 # User-Defined Namespaces
 
-Namespaces you create are called **user-defined namespaces** (more precisely, **program-defined namespaces**).
+Namespaces you create are called **user-defined namespaces** (more precisely, **program-defined namespaces**). They extend the concept of [[Namespaces]] introduced in the standard library (e.g., `std`).
 
 ## Syntax
 

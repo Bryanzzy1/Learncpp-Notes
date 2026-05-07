@@ -18,6 +18,8 @@ related:
   - "[[Static Local Variables]]"
   - "[[Forward Declaration Summary]]"
   - "[[Storage Class Specifiers]]"
+  - "[[Memory Model]]"
+  - "[[Initialization]]"
 ---
 
 # Scope, Duration, and Linkage Summary
@@ -34,5 +36,7 @@ related:
 | Internal constant global | `constexpr int g_x { 1 };` | Global | Static | Internal | Must be initialized |
 | External constant global | `extern const int g_x { 1 };` | Global | Static | External | Must be initialized |
 | Inline constant global (C++17) | `inline constexpr int g_x { 1 };` | Global | Static | External | Must be initialized |
+
+For how variables are created and stored, see [[Memory Model]] and [[Initialization]].
 
 > Full coverage: [[Chapter 7 — Scope, duration, and linkage]] → Scope, Duration, and Linkage Summary

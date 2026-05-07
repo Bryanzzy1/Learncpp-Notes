@@ -4,15 +4,18 @@ tags:
   - concept
   - syntax
   - best-practice
+  - subnode
 aliases:
   - unnamed namespace
   - anonymous namespace
   - inline namespace
-up: "[[Chapter 7 — Scope, duration, and linkage]]"
+up: "[[User-Defined Namespaces]]"
 related:
   - "[[User-Defined Namespaces]]"
-  - "[[Internal Linkage]]"
   - "[[Using Declarations and Directives]]"
+  - "[[Internal Linkage]]"
+  - "[[Namespaces]]"
+  - "[[Functions]]"
 ---
 
 # Unnamed and Inline Namespaces
@@ -37,9 +40,9 @@ int main()
 }
 ```
 
-- All identifiers inside an unnamed namespace have **internal linkage** automatically — they cannot be seen outside the translation unit.
-- For functions, this is equivalent to declaring them `static`.
-- **Prefer unnamed namespaces** when you have content to keep local to a translation unit — they work for a wider range of identifiers (e.g., type definitions) than `static`.
+- All identifiers inside an unnamed namespace have **internal linkage** automatically — they cannot be seen outside the translation unit. See [[Internal Linkage]].
+- For [[Functions]], this is equivalent to declaring them `static`.
+- **Prefer unnamed namespaces** over `static` when you have content to keep local to a translation unit — they work for a wider range of identifiers (e.g., type definitions).
 - **Avoid unnamed namespaces in header files.**
 
 ## Inline namespaces

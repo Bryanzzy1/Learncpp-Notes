@@ -14,6 +14,9 @@ related:
   - "[[Static Local Variables]]"
   - "[[Internal Linkage]]"
   - "[[External Linkage]]"
+  - "[[Initialization]]"
+  - "[[Memory Model]]"
+  - "[[Undefined Behavior]]"
 ---
 
 # Local Variables
@@ -24,7 +27,7 @@ Local variables are variables declared inside a function or block.
 
 A variable's **storage duration** (or just **duration**) determines when it is created and destroyed:
 
-- Local variables have **automatic storage duration**: created when the block is entered, destroyed when it exits.
+- Local variables have **automatic storage duration**: created when the block is entered, destroyed when it exits. They live on the call stack — see [[Memory Model]].
 - For this reason, local variables are sometimes called **automatic variables**.
 
 ## Linkage
@@ -32,6 +35,10 @@ A variable's **storage duration** (or just **duration**) determines when it is c
 An identifier's **linkage** determines whether the same name in a different scope refers to the same object:
 
 - Local variables have **no linkage** — each declaration is independent, even if two locals share a name.
+
+## Initialization
+
+Always initialize local variables. Uninitialized locals hold indeterminate garbage values; reading them is [[Undefined Behavior]]. See [[Initialization]] for best practices.
 
 ## Contrast with global variables
 

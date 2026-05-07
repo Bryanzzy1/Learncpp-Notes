@@ -3,17 +3,23 @@ tags:
   - cpp/linkage
   - cpp/variables
   - concept
+  - subnode
 aliases:
   - forward declaration table
   - forward declaration reference
-up: "[[Chapter 7 — Scope, duration, and linkage]]"
+up: "[[External Linkage]]"
 related:
   - "[[External Linkage]]"
   - "[[Internal Linkage]]"
   - "[[Scope, Duration, and Linkage Summary]]"
+  - "[[Functions]]"
+  - "[[Header Files]]"
+  - "[[One Definition Rule]]"
 ---
 
 # Forward Declaration Summary
+
+Forward declarations let the compiler know an identifier exists before its definition is seen — the linker resolves the actual definition later. The [[One Definition Rule]] governs how many definitions are allowed. [[Header Files]] are the standard place to put forward declarations so they can be shared across translation units.
 
 | **Type** | **Example** | **Notes** |
 | --- | --- | --- |

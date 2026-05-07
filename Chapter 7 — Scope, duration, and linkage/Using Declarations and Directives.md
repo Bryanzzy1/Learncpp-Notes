@@ -4,16 +4,19 @@ tags:
   - concept
   - syntax
   - best-practice
+  - subnode
 aliases:
   - using declaration
   - using directive
   - qualified name
   - unqualified name
   - using namespace std
-up: "[[Chapter 7 — Scope, duration, and linkage]]"
+up: "[[User-Defined Namespaces]]"
 related:
   - "[[User-Defined Namespaces]]"
   - "[[Unnamed and Inline Namespaces]]"
+  - "[[Namespaces]]"
+  - "[[IO]]"
 ---
 
 # Using Declarations and Directives
@@ -52,8 +55,8 @@ using namespace std;   // everything in std is accessible unqualified
 
 ## Best practices
 
-- **Do not use using-statements in header files** or before an `#include` directive — they affect all files that include the header.
+- **Do not use using-statements in header files** or before an `#include` directive — they affect all files that include the header. This defeats the purpose of [[Namespaces]].
 - Once a using-statement is declared, it cannot be cancelled or replaced within the same scope.
-- Prefer using declarations over using directives when you need to bring in specific names.
+- Prefer using declarations over using directives (e.g., `using std::cout` rather than `using namespace std` when working with [[IO]]).
 
 > Full coverage: [[Chapter 7 — Scope, duration, and linkage]] → Using Declarations and Directives

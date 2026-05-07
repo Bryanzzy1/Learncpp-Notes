@@ -15,6 +15,8 @@ related:
   - "[[Global Variables]]"
   - "[[Unnamed and Inline Namespaces]]"
   - "[[Storage Class Specifiers]]"
+  - "[[Translation Unit]]"
+  - "[[One Definition Rule]]"
 ---
 
 # Internal Linkage
@@ -24,7 +26,7 @@ related:
 | Linkage | Who can see it |
 |---------|---------------|
 | No linkage | Only within its own block (local variables) |
-| Internal linkage | Anywhere within the same translation unit |
+| Internal linkage | Anywhere within the same [[Translation Unit]] |
 | External linkage | Across all translation units |
 
 ## Local variables
@@ -33,7 +35,7 @@ Local variables have **no linkage** — each declaration is entirely independent
 
 ## Internal linkage for globals
 
-An identifier with **internal linkage** is visible within a single translation unit but inaccessible from other files. Two source files can each have an identically named internal identifier without conflict.
+An identifier with **internal linkage** is visible within a single [[Translation Unit]] but inaccessible from other files. Two source files can each have an identically named internal identifier without conflict — unlike external linkage identifiers which must satisfy the [[One Definition Rule]] across the whole program.
 
 Global variables with internal linkage are called **internal variables**.
 
@@ -43,7 +45,7 @@ Global variables with internal linkage are called **internal variables**.
 static int g_x;        // non-const global with internal linkage
 ```
 
-Using `static` here is a **storage class specifier** — it sets both the name's linkage (internal) and storage duration (static).
+Using `static` here is a **storage class specifier** — it sets both the name's linkage (internal) and storage duration (static). See [[Storage Class Specifiers]].
 
 ### Const and constexpr globals
 

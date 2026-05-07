@@ -14,6 +14,10 @@ related:
   - "[[Global Variables]]"
   - "[[Forward Declaration Summary]]"
   - "[[Storage Class Specifiers]]"
+  - "[[Functions]]"
+  - "[[Translation Unit]]"
+  - "[[One Definition Rule]]"
+  - "[[Header Files]]"
 ---
 
 # External Linkage
@@ -22,7 +26,7 @@ An identifier with **external linkage** can be seen and used both from the file 
 
 ## Functions
 
-**Functions have external linkage by default.** No special keyword is needed to share a function across files — just provide a forward declaration in the other files.
+**[[Functions]] have external linkage by default.** No special keyword is needed to share a function across files — just provide a forward declaration in the other files (typically via a [[Header Files|header file]]). This is governed by the [[One Definition Rule]]: the function may be declared many times but must be defined exactly once.
 
 ## External global variables
 
@@ -46,6 +50,6 @@ extern const int g_x;
 ## How to share a global across files
 
 1. Define the variable in one `.cpp` file.
-2. Place a forward declaration (`extern`, no initializer) in every other file that needs it.
+2. Place a forward declaration (`extern`, no initializer) in every other file that needs it — or put the forward declaration in a [[Header Files|header file]] that each file includes.
 
 > Full coverage: [[Chapter 7 — Scope, duration, and linkage]] → External Linkage

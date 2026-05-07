@@ -10,6 +10,7 @@ up: "[[Chapter 7 — Scope, duration, and linkage]]"
 related:
   - "[[Local Variables]]"
   - "[[Variable Shadowing]]"
+  - "[[Undefined Behavior]]"
 ---
 
 # Block Scope

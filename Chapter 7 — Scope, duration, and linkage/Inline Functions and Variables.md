@@ -15,6 +15,10 @@ up: "[[Chapter 7 — Scope, duration, and linkage]]"
 related:
   - "[[Global Variables]]"
   - "[[External Linkage]]"
+  - "[[Functions]]"
+  - "[[One Definition Rule]]"
+  - "[[constexpr]]"
+  - "[[Header Files]]"
 ---
 
 # Inline Functions and Variables
@@ -33,10 +37,10 @@ related:
 
 Do **not** use `inline` to request inline expansion — compilers ignore this hint and decide on their own. Premature optimization via `inline` can hurt performance.
 
-In modern C++, `inline` means **"multiple definitions are allowed"**:
-- An inline function/variable can be defined in multiple translation units without violating the **One Definition Rule (ODR)**.
+In modern C++, `inline` means **"multiple definitions are allowed"** without violating the [[One Definition Rule]]:
+- An inline [[Functions|function]]/variable can be defined in multiple translation units.
 - All definitions must be **identical** (or undefined behavior results).
-- Inline functions are typically defined in **header files** so every translation unit that uses them can see the full definition.
+- Inline functions are typically defined in **[[Header Files]]** so every translation unit that uses them can see the full definition.
 
 ## Inline constexpr global variables (C++17)
 
@@ -45,6 +49,6 @@ In modern C++, `inline` means **"multiple definitions are allowed"**:
 inline constexpr int maxItems { 100 };
 ```
 
-Prefer `inline constexpr` global variables in header files when you need shared compile-time constants across translation units.
+Prefer `inline constexpr` global variables in [[Header Files|header files]] when you need shared compile-time constants across translation units. See [[constexpr]] for how constexpr constants work.
 
 > Full coverage: [[Chapter 7 — Scope, duration, and linkage]] → Inline Functions and Variables
