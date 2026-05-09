@@ -110,7 +110,7 @@ Last edited: May 8, 2026 3:54 PM
         - The statements after labels are all scoped to the switch block. No implicit blocks are created.
             - All statements inside the switch are considered to be part of the same scope.
         - When execution flows from a statement underneath a label into statements underneath a subsequent label, this is called **fallthrough**.
-            - **The [[fallthrough]] attribute**
+            - **The `[[fallthrough]]` attribute**
                 - **Attributes** are a modern C++ feature that allows the programmer to provide the compiler with some additional data about the code.
                 - The `[[fallthrough]]` attribute modifies a `null statement` to indicate that fallthrough is intentional (and no warnings should be triggered)
                 
