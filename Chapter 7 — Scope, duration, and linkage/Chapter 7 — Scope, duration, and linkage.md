@@ -22,7 +22,7 @@ related:
   - "[[External Linkage]]"
   - "[[Inline Functions and Variables]]"
   - "[[Static Local Variables]]"
-  - "[[Scope, Duration, and Linkage Summary]]"
+  - "[[Scope, Duration, and Linkage]]"
   - "[[Forward Declaration Summary]]"
   - "[[Storage Class Specifiers]]"
   - "[[Using Declarations and Directives]]"
@@ -118,7 +118,7 @@ Last edited: May 7, 2026 4:19 PM
     - Static local variables can be made const (or constexpr).
         - Static local variables are best used to avoid expensive local object initialization each time a function is called.
     - Non-const static local variables should generally be avoided. If you do use them, ensure the variable never needs to be reset, and isn't used to alter program flow.
-- **[[Scope, Duration, and Linkage Summary]]**
+- **[[Scope, Duration, and Linkage]]**
     
     | **Type** | **Example** | **Scope** | **Duration** | **Linkage** | **Notes** |
     | --- | --- | --- | --- | --- | --- |

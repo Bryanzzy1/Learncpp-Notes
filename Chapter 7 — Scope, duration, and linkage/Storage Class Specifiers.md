@@ -16,7 +16,7 @@ related:
   - "[[Internal Linkage]]"
   - "[[External Linkage]]"
   - "[[Static Local Variables]]"
-  - "[[Scope, Duration, and Linkage Summary]]"
+  - "[[Scope, Duration, and Linkage]]"
 ---
 
 # Storage Class Specifiers

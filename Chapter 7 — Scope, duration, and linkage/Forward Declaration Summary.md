@@ -11,7 +11,7 @@ up: "[[External Linkage]]"
 related:
   - "[[External Linkage]]"
   - "[[Internal Linkage]]"
-  - "[[Scope, Duration, and Linkage Summary]]"
+  - "[[Scope, Duration, and Linkage]]"
   - "[[Functions]]"
   - "[[Header Files]]"
   - "[[One Definition Rule]]"
