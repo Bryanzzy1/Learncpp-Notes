@@ -1,3 +1,24 @@
+---
+tags:
+  - cpp/functions
+  - cpp/templates
+  - concept
+  - syntax
+  - best-practice
+  - chapter
+aliases:
+  - Function Overloading and Templates
+  - Ch11
+up: LearnCPP
+related:
+  - "[[Function Overloading]]"
+  - "[[Overload Resolution]]"
+  - "[[Deleted Functions]]"
+  - "[[Default Arguments]]"
+  - "[[Function Templates]]"
+  - "[[Non-type Template Parameters]]"
+---
+
 # Chapter 11 — Functions
 
 Pin: No
@@ -7,9 +28,9 @@ Last edited: May 13, 2026 3:29 PM
 
 ## Notes
 
-- **Function overloading**
+- **[[Function Overloading]]**
     - Create multiple functions with the same name, so long as each identically named function has different parameter types (or the functions can be otherwise differentiated).
-    - Each function sharing a name (in the same scope) is called an **overloaded function** (sometimes called an **overload** for short).
+    - Each function sharing a name (in the same scope) is called an **overloaded function** (sometimes called an **overload** for short).
     
     ```cpp
     int add(int x, int y) // integer version
@@ -29,12 +50,12 @@ Last edited: May 13, 2026 3:29 PM
     ```
     
     - Functions can be overloaded so long as each overloaded function can be differentiated by the compiler. If an overloaded function can not be differentiated, a compile error will result.
-    - **Overload resolution**
+    - **[[Overload Resolution]]**
         - When a function call is made to a function that has been overloaded, the compiler will try to match the function call to the appropriate overload based on the arguments used in the function call.
         - When a function call is made to an overloaded function, the compiler steps through a sequence of rules to determine which (if any) of the overloaded functions is the best match
         - At each step, the compiler applies a bunch of different type conversions to the argument(s) in the function call.
             - For each conversion applied, the compiler checks if any of the overloaded functions are now a match.
-            - The **trivial conversions** are a set of specific conversion rules that will modify types (without modifying the value) for purposes of finding a match.
+            - The **trivial conversions** are a set of specific conversion rules that will modify types (without modifying the value) for purposes of finding a match.
             - If no exact match is found, the compiler tries to find a match by applying numeric promotion to the argument(s).
             - If no match is found via numeric promotion, the compiler tries to find a match by applying numeric conversions
             - If no match is found via numeric conversion, the compiler tries to find a match through any user-defined conversions.
@@ -50,7 +71,7 @@ Last edited: May 13, 2026 3:29 PM
                 - The constructor of a class also acts as a user-defined conversion from other types to that class type, and can be used during this step to find matching functions.
             - If no match is found via user-defined conversion, the compiler will look for a matching function that uses ellipsis.
         - **Ambiguous matches**
-            - An **ambiguous match** occurs when the compiler finds two or more functions that can be made to match in the same step.
+            - An **ambiguous match** occurs when the compiler finds two or more functions that can be made to match in the same step.
                 - When this occurs, the compiler will stop matching and issue a compile error stating that it has found an ambiguous function call.
             - Default arguments can also cause ambiguous matches.
         - If there are multiple arguments, the compiler applies the matching rules to each argument in turn.
@@ -75,12 +96,12 @@ Last edited: May 13, 2026 3:29 PM
         - Because type aliases (or typedefs) are not distinct types, overloaded functions using type aliases are not distinct from overloads using the aliased type.
         - Ellipsis parameters are considered to be a unique type of parameter
     - **The return type of a function is not considered for differentiation**
-    - A function’s **type signature** (generally called a **signature**) is defined as the parts of the function header that are used for differentiation of the function.
-        - In C++, this includes the function name, number of parameters, parameter type, and function-level qualifiers. It notably does *not* include the return type.
-    - When the compiler compiles a function, it performs **name mangling**
-        - The compiled name of the function is altered (“mangled”) based on various criteria, such as the number and type of parameters, so that the linker has unique names to work with.
-            - For example, a function with prototype `int fcn()` might compile to mangled name `__fcn_v`, whereas `int fcn(int)` might compile to mangled name `__fcn_i`.
-- **Deleting a function using the `= delete` specifier**
+    - A function's **type signature** (generally called a **signature**) is defined as the parts of the function header that are used for differentiation of the function.
+        - In C++, this includes the function name, number of parameters, parameter type, and function-level qualifiers. It notably does *not* include the return type.
+    - When the compiler compiles a function, it performs **name mangling**
+        - The compiled name of the function is altered ("mangled") based on various criteria, such as the number and type of parameters, so that the linker has unique names to work with.
+            - For example, a function with prototype `int fcn()` might compile to mangled name `__fcn_v`, whereas `int fcn(int)` might compile to mangled name `__fcn_i`.
+- **[[Deleted Functions]]**
     
     ```cpp
     #include <iostream>
@@ -106,10 +127,10 @@ Last edited: May 13, 2026 3:29 PM
     }
     ```
     
-    - First, `printInt('a')` is a direct match for `printInt(char)`, which is deleted.
+    - First, `printInt('a')` is a direct match for `printInt(char)`, which is deleted.
         - The compiler thus produces a compilation error.
-    - `printInt(true)` is a direct match for `printInt(bool)`, which is deleted, and thus also produces a compilation error.
-    - `= delete` means “I forbid this”, not “this doesn’t exist”.
+    - `printInt(true)` is a direct match for `printInt(bool)`, which is deleted, and thus also produces a compilation error.
+    - `= delete` means "I forbid this", not "this doesn't exist".
     - Deleted function participate in all stages of function overload resolution (not just in the exact match stage). If a deleted function is selected, then a compilation error results.
         - Other types of functions can be similarly deleted.
         - **Deleting all non-matching overloads**
@@ -122,15 +143,15 @@ Last edited: May 13, 2026 3:29 PM
                 void printInt(T x) = delete;
                 ```
                 
-- **Default arguments**
-    - A **default argument** is a default value provided for a function parameter.
-        - Note that you must use the equals sign to specify a default argument. Using parenthesis or brace initialization won’t work
+- **[[Default Arguments]]**
+    - A **default argument** is a default value provided for a function parameter.
+        - Note that you must use the equals sign to specify a default argument. Using parenthesis or brace initialization won't work
     - Default arguments are inserted by the compiler at site of the function call.
     - If a parameter is given a default argument, all subsequent parameters (to the right) must also be given default arguments.
     - **Default arguments can not be redeclared, and must be declared before use**
         - The default argument must also be declared in the translation unit before it can be used
         - If the function has a forward declaration (especially one in a header file), put the default argument there. Otherwise, put the default argument in the function definition.
-    - Default values are not part of a function’s signature, so these function declarations are differentiated overloads.
+    - Default values are not part of a function's signature, so these function declarations are differentiated overloads.
         
         ```cpp
         void print(int x);                  // signature print(int)
@@ -153,20 +174,20 @@ Last edited: May 13, 2026 3:29 PM
         }
         ```
         
-    - **Default arguments don’t work for functions called through function pointers**
-- **C++ templates**
-    - Instead of manually creating a bunch of mostly-identical functions or classes (one for each set of different types), we instead create a single *template*.
-    - A **template** definition describes what a function or class looks like.
+    - **Default arguments don't work for functions called through function pointers**
+- **[[Function Templates]]**
+    - Instead of manually creating a bunch of mostly-identical functions or classes (one for each set of different types), we instead create a single *template*.
+    - A **template** definition describes what a function or class looks like.
         - Once a template is defined, the compiler can use the template to generate as many overloaded functions (or classes) as needed, each using different actual types!
-        - Templates can work with types that didn’t even exist when the template was written
+        - Templates can work with types that didn't even exist when the template was written
     - C++ supports 3 different kinds of template parameters:
         - Type template parameters (where the template parameter represents a type).
         - Non-type template parameters (where the template parameter represents a constexpr value).
         - Template template parameters (where the template parameter represents a template).
     - **Function templates**
         - A function-like definition that is used to generate one or more overloaded functions, each with a different set of actual types.
-        - The initial function template that is used to generate other functions is called the **primary template**, and the functions generated from the primary template are called **instantiated functions**.
-        - When we create a primary function template, we use **placeholder types** (technically called **type template parameters**, informally called **template types**) for any parameter types, return types, or types used in the function body that we want to be specified later, by the user of the template.
+        - The initial function template that is used to generate other functions is called the **primary template**, and the functions generated from the primary template are called **instantiated functions**.
+        - When we create a primary function template, we use **placeholder types** (technically called **type template parameters**, informally called **template types**) for any parameter types, return types, or types used in the function body that we want to be specified later, by the user of the template.
         
         ```cpp
         template <typename T> // this is the template parameter declaration defining T as a type template parameter
@@ -178,15 +199,15 @@ Last edited: May 13, 2026 3:29 PM
         
         - **Function template instantiation**
             - To use the function template above: `max<actual_type>(arg1, arg2); // actual_type is some actual type, like int or double`
-            - When a function is instantiated due to a function call, it’s called **implicit instantiation**.
-            - A function that is instantiated from a template is technically called a **specialization**, but in common language is often called a **function instance**.
+            - When a function is instantiated due to a function call, it's called **implicit instantiation**.
+            - A function that is instantiated from a template is technically called a **specialization**, but in common language is often called a **function instance**.
             - A function template is only instantiated the first time a function call is made in each translation unit. Further calls to the function are routed to the already instantiated function.
         - **Template argument deduction**
             - Have the compiler deduce the actual type that should be used from the argument types in the function call.
-            - When the compiler is doing template argument deduction, it won’t do any type conversions.
+            - When the compiler is doing template argument deduction, it won't do any type conversions.
             - Following the example above, either works: `max(1, 2)` or `max<>(1, 2)` .
-                - In the first case (with no angled brackets), the compiler will consider both `max<int>` template function overloads and `max` non-template function overloads.
-                - In the second case (with the empty angled brackets), the compiler will only consider `max<int>` template function overloads when determining which overloaded function to call.
+                - In the first case (with no angled brackets), the compiler will consider both `max<int>` template function overloads and `max` non-template function overloads.
+                - In the second case (with the empty angled brackets), the compiler will only consider `max<int>` template function overloads when determining which overloaded function to call.
                 - Favor the normal function call syntax when making calls to a function instantiated from a function template (unless you need the function template version to be preferred over a matching non-template function).
         - **Function templates with non-template parameters**
             
@@ -198,7 +219,7 @@ Last edited: May 13, 2026 3:29 PM
             }
             ```
             
-            - This function template has a templated first parameter, but the second parameter is fixed with type `double` .
+            - This function template has a templated first parameter, but the second parameter is fixed with type `double` .
         - **Instantiated functions may not always make sense semantically**
             - We can tell the compiler that instantiation of function templates with certain arguments should be disallowed.
                 - `const char* addOne(const char* x) = delete;`
@@ -212,7 +233,7 @@ Last edited: May 13, 2026 3:29 PM
             }
             ```
             
-            - Because `T` and `U` are independent template parameters, they resolve their types independent of each other. This means `T` and `U` can resolve to different types, or they can resolve to the same type.
+            - Because `T` and `U` are independent template parameters, they resolve their types independent of each other. This means `T` and `U` can resolve to different types, or they can resolve to the same type.
             - But the results undergo narrow conversion, so we can use this type:
             
             ```cpp
@@ -225,7 +246,7 @@ Last edited: May 13, 2026 3:29 PM
             
             - If we need a function that can be forward declared, we have to be explicit about the return type
         - **Abbreviated function templates**
-            - C++20: When the `auto` keyword is used as a parameter type in a normal function, the compiler will automatically convert the function into a function template with each auto parameter becoming an independent template type parameter.
+            - C++20: When the `auto` keyword is used as a parameter type in a normal function, the compiler will automatically convert the function into a function template with each auto parameter becoming an independent template type parameter.
             
             ```cpp
             auto max(auto x, auto y)
@@ -272,10 +293,10 @@ Last edited: May 13, 2026 3:29 PM
             ```
             
             - Whichever function template is more restrictive/specialized will be preferred.
-    - Template types are sometimes called **generic types**
+    - Template types are sometimes called **generic types**
     - Use function templates to write generic code that can work with a wide variety of types whenever you have the need.
-    - **Non-type template parameters**
-        - A **non-type template parameter** is a template parameter with a fixed type that serves as a placeholder for a constexpr value passed in as a template argument.
+    - **[[Non-type Template Parameters]]**
+        - A **non-type template parameter** is a template parameter with a fixed type that serves as a placeholder for a constexpr value passed in as a template argument.
         
         ```cpp
         template <int N> // declare a non-type template parameter of type int named N
@@ -290,11 +311,11 @@ Last edited: May 13, 2026 3:29 PM
         - Non-type template parameters are used primarily when we need to pass constexpr values to functions (or class types) so they can be used in contexts that require a constant expression.
         - **Implicit conversions for non-type template arguments**
             - In this context, only certain types of constexpr conversions are allowed. The most common types of allowed conversions include:
-                - Integral promotions (e.g. `char` to `int`)
-                - Integral conversions (e.g. `char` to `long` or `int` to `char`)
-                - User-defined conversions (e.g. some program-defined class to `int`)
-                - Lvalue to rvalue conversions (e.g. some variable `x` to the value of `x`)
-        - As of C++17, non-type template parameters may use `auto` to have the compiler deduce the non-type template parameter from the template argument
+                - Integral promotions (e.g. `char` to `int`)
+                - Integral conversions (e.g. `char` to `long` or `int` to `char`)
+                - User-defined conversions (e.g. some program-defined class to `int`)
+                - Lvalue to rvalue conversions (e.g. some variable `x` to the value of `x`)
+        - As of C++17, non-type template parameters may use `auto` to have the compiler deduce the non-type template parameter from the template argument
         
         ```cpp
         template <auto N> // deduce non-type template parameter from template argument
