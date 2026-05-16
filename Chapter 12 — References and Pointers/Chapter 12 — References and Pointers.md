@@ -23,7 +23,7 @@ related:
   - "[[Pass by Address]]"
   - "[[In and Out Parameters]]"
   - "[[Type Deduction with References and Pointers]]"
-  - "[[std::optional]]"
+  - "[[std-optional|std::optional]]"
 ---
 
 # Chapter 12 — References and Pointers
@@ -215,7 +215,7 @@ Last edited: May 16, 2026 3:31 PM
         - If you want a const reference, reapply the `const` qualifier even when it's not strictly necessary, as it makes your intent clear and helps prevent mistakes.
     - **Type deduction and pointers**
         - Unlike references, type deduction does not drop pointers
-- **[[std::optional]]**
+- **[[std-optional|std::optional]]**
     - C++17 introduces
     - A `std::optional<T>` can either have a value of type `T`, or not.
     

@@ -17,7 +17,7 @@ related:
   - "[[Pass by Address]]"
   - "[[Pass by Reference]]"
   - "[[Functions]]"
-  - "[[std::optional]]"
+  - "[[std-optional|std::optional]]"
   - "[[Chapter 12 — References and Pointers]]"
 ---
 
@@ -43,7 +43,7 @@ void getResult(int& result); // result is an out parameter
 
 Out parameters are often confusing: at the call site, the caller cannot tell the variable will be modified without reading the function declaration. Prefer returning values from [[Functions|functions]] when possible.
 
-For functions that may fail to produce a value, consider returning [[std::optional]] instead of using an out parameter.
+For functions that may fail to produce a value, consider returning [[std-optional|std::optional]] instead of using an out parameter.
 
 ## In-out parameters
 
