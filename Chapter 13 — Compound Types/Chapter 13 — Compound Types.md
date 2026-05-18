@@ -1,3 +1,30 @@
+---
+tags:
+  - cpp/types
+  - cpp/enums
+  - cpp/structs
+  - cpp/templates
+  - cpp/operators
+  - concept
+  - syntax
+  - best-practice
+  - chapter
+aliases:
+  - Compound Types
+  - Ch13
+up: LearnCPP
+related:
+  - "[[Program-defined Types]]"
+  - "[[Enumerations]]"
+  - "[[Unscoped Enumerations]]"
+  - "[[Scoped Enumerations]]"
+  - "[[Operator Overloading]]"
+  - "[[Structs]]"
+  - "[[Class Templates]]"
+  - "[[CTAD]]"
+  - "[[Alias Templates]]"
+---
+
 # Chapter 13 — Compound Types
 
 Pin: No
@@ -7,7 +34,7 @@ Last edited: May 18, 2026 2:55 PM
 
 ## Notes
 
-- **Program-defined (user-defined) types**
+- **[[Program-defined Types]]**
     
     ```cpp
     struct Fraction
@@ -18,9 +45,9 @@ Last edited: May 18, 2026 2:55 PM
     ```
     
     - **Type definitions are partially exempt from the one-definition rule (ODR)**
-- **Enumerations**
-    - **Unscoped enumerations**
-        - An **enumeration** (also called an **enumerated type** or an **enum**) is a compound data type whose values are restricted to a set of named symbolic constants (called **enumerators**).
+- **[[Enumerations]]**
+    - **[[Unscoped Enumerations]]**
+        - An **enumeration** (also called an **enumerated type** or an **enum**) is a compound data type whose values are restricted to a set of named symbolic constants (called **enumerators**).
         
         ```cpp
         // Define a new unscoped enumeration named Color
@@ -36,15 +63,15 @@ Last edited: May 18, 2026 2:55 PM
         }; // the enum definition must end with a semicolon
         ```
         
-        - Each enumerated type you create is considered to be a **distinct type**, meaning the compiler can distinguish it from other types (unlike typedefs or type aliases, which are considered non-distinct from the types they are aliasing).
+        - Each enumerated type you create is considered to be a **distinct type**, meaning the compiler can distinguish it from other types (unlike typedefs or type aliases, which are considered non-distinct from the types they are aliasing).
         - **Avoiding enumerator naming collisions**
-            - Prefer putting your enumerations inside a named scope region (such as a namespace or class) so the enumerators don’t pollute the global namespace.
+            - Prefer putting your enumerations inside a named scope region (such as a namespace or class) so the enumerators don't pollute the global namespace.
         - Avoid assigning explicit values to your enumerators unless you have a compelling reason to do so.
         - When an enumerated type is used in a function call or with an operator, the compiler will first try to find a function or operator that matches the enumerated type.
-        - Enumerators have values that are of an integral type. The specific integral type used to represent the value of enumerators is called the enumeration’s **underlying type** (or **base**).
+        - Enumerators have values that are of an integral type. The specific integral type used to represent the value of enumerators is called the enumeration's **underlying type** (or **base**).
             - `enum Color : std::int8_t`
             - Specify the base type of an enumeration only when necessary.
-        - It is also safe to static_cast any integral value that is in range of the target enumeration’s underlying type, even if there are no enumerators representing that value.
+        - It is also safe to static_cast any integral value that is in range of the target enumeration's underlying type, even if there are no enumerators representing that value.
         - `Pet pet { static_cast<Pet>(2) }; // convert integer 2 to a Pet`
             
             ```cpp
@@ -68,8 +95,8 @@ Last edited: May 18, 2026 2:55 PM
             }
             ```
             
-    - **Scoped Enumeration**
-        - They won’t implicitly convert to integers, and the enumerators are *only* placed into the scope region of the enumeration (not into the scope region where the enumeration is defined).
+    - **[[Scoped Enumerations]]**
+        - They won't implicitly convert to integers, and the enumerators are *only* placed into the scope region of the enumeration (not into the scope region where the enumeration is defined).
         
         ```cpp
         int main()
@@ -98,8 +125,8 @@ Last edited: May 18, 2026 2:55 PM
         }
         ```
         
-        - In C++23, use `std::to_underlying()` (defined in the <utility> header), which converts an enumerator to a value of the underlying type of the enumeration.
-        - Favor scoped enumerations over unscoped enumerations unless there’s a compelling reason to do otherwise.
+        - In C++23, use `std::to_underlying()` (defined in the <utility> header), which converts an enumerator to a value of the underlying type of the enumeration.
+        - Favor scoped enumerations over unscoped enumerations unless there's a compelling reason to do otherwise.
         - One thing to speed up conversion is to overload the unary operator + to perform this conversion
         
         ```cpp
@@ -120,14 +147,14 @@ Last edited: May 18, 2026 2:55 PM
         }
         ```
         
-        - Introduced in C++20, a `using enum` statement imports all of the enumerators from an enum into the current scope.
-- **Overloading the I/O operators**
+        - Introduced in C++20, a `using enum` statement imports all of the enumerators from an enum into the current scope.
+- **[[Operator Overloading]]**
     - Steps:
-        - Define a function using the name of the operator as the function’s name.
+        - Define a function using the name of the operator as the function's name.
         - Add a parameter of the appropriate type for each operand (in left-to-right order). One of these parameters must be a user-defined type (a class type or an enumerated type), otherwise the compiler will error.
         - Set the return type to whatever type makes sense.
         - Use a return statement to return the result of the operation.
-    - When this expression is evaluated, the compiler will look for an overloaded `operator<<` function that can handle arguments of type `std::ostream` and `int`.
+    - When this expression is evaluated, the compiler will look for an overloaded `operator<<` function that can handle arguments of type `std::ostream` and `int`.
         
         ```cpp
         // Teach operator<< how to print a Color
@@ -151,7 +178,7 @@ Last edited: May 18, 2026 2:55 PM
         }
         ```
         
-- **Structs, members, and member selection**
+- **[[Structs]]**
     - A struct is a class type (as are classes and unions). As such, anything that applies to class types applies to structs.
     
     ```cpp
@@ -174,15 +201,15 @@ Last edited: May 18, 2026 2:55 PM
     }
     ```
     
-    - The variables that are part of the struct are called **data members** (or **member variables**).
+    - The variables that are part of the struct are called **data members** (or **member variables**).
     - **Data members are not initialized by default**
-    - An **aggregate data type** (also called an **aggregate**) is any type that can contain multiple data members.
-        - Aggregates use a form of initialization called **aggregate initialization**, which allows us to directly initialize the members of aggregates. To do this, we provide an **initializer list** as an initializer, which is just a braced list of comma-separated values.
+    - An **aggregate data type** (also called an **aggregate**) is any type that can contain multiple data members.
+        - Aggregates use a form of initialization called **aggregate initialization**, which allows us to directly initialize the members of aggregates. To do this, we provide an **initializer list** as an initializer, which is just a braced list of comma-separated values.
         - **memberwise initialization**, which means each member in the struct is initialized in the order of declaration
         - Prefer the (non-copy) braced list form when initializing aggregates.
             - `Employee joe { 2, 28, 45000.0 };`
     - Variables of a struct type can be const (or constexpr), and just like all const variables, they must be initialized.
-    - C++20 adds a new way to initialize struct members called **designated initializers**.
+    - C++20 adds a new way to initialize struct members called **designated initializers**.
         - `Foo f1{ .a{ 1 }, .c{ 3 } };` , `Foo f2{ .a = 1, .c = 3 };`
     - **Initializing a struct with another struct of the same type**
     
@@ -238,8 +265,8 @@ Last edited: May 18, 2026 2:55 PM
     ```
     
     - In most cases, we want our structs (and classes) to be owners. The easiest way to enable this is to ensure each data member has an owning type (e.g. not a viewer, pointer, or reference).
-    - We can only say that the size of a struct will be *at least* as large as the size of all the variables it contains.
-        - For performance reasons, the compiler will sometimes add gaps into structures (this is called **padding**).
+    - We can only say that the size of a struct will be *at least* as large as the size of all the variables it contains.
+        - For performance reasons, the compiler will sometimes add gaps into structures (this is called **padding**).
         - data structure alignment
     - **Member selection for pointers to structs**
         
@@ -250,9 +277,9 @@ Last edited: May 18, 2026 2:55 PM
         ```
         
         - You can chain**`operator->`**
-- **Class templates**
+- **[[Class Templates]]**
     - a template definition for instantiating class types.
-    - A “class type” is a struct, class, or union type.
+    - A "class type" is a struct, class, or union type.
     
     ```cpp
     template <typename T>
@@ -293,7 +320,7 @@ Last edited: May 18, 2026 2:55 PM
     
     - Class templates can also have multiple template types.
     - **std::pair**
-        - The C++ standard library contains a class template named `std::pair` (in the `<utility>` header) that is defined identically to the `Pair` class template with multiple template types in the preceding section.
+        - The C++ standard library contains a class template named `std::pair` (in the `<utility>` header) that is defined identically to the `Pair` class template with multiple template types in the preceding section.
     - **Function Templates with Multiple Types**
         
         ```cpp
@@ -306,9 +333,9 @@ Last edited: May 18, 2026 2:55 PM
         void print(Pair p)       // "Pair" here means the template param, not the class
         ```
         
-- **Class template argument deduction (CTAD) and deduction guides**
+- **[[CTAD|Class Template Argument Deduction (CTAD)]]**
     - **Class template argument deduction (CTAD)**
-        - Starting in C++17, when instantiating an object from a class template, the compiler can deduce the template types from the types of the object’s initializer
+        - Starting in C++17, when instantiating an object from a class template, the compiler can deduce the template types from the types of the object's initializer
         - CTAD is only performed if no template argument list is present.
         
         ```cpp
@@ -317,8 +344,8 @@ Last edited: May 18, 2026 2:55 PM
         ```
         
         - When initializing the member of a class type using non-static member initialization, CTAD will not work in this context. All template arguments must be explicitly specified
-        - **CTAD doesn’t work with function parameters**
-        - **CTAD doesn’t work with non-static member initialization**
+        - **CTAD doesn't work with function parameters**
+        - **CTAD doesn't work with non-static member initialization**
     - **Template argument deduction guides**
         - tells the compiler how to deduce the template arguments for a given class template.
         
@@ -329,16 +356,16 @@ Last edited: May 18, 2026 2:55 PM
         Pair(T, U) -> Pair<T, U>;
         ```
         
-        - So when the compiler sees the definition `Pair p2{ 1, 2 };` in our program, it will say, “oh, this is a declaration of a `Pair` and there are two arguments of type `int` and `int`, so using the deduction guide, I should deduce this to be a `Pair<int, int>`“.
+        - So when the compiler sees the definition `Pair p2{ 1, 2 };` in our program, it will say, "oh, this is a declaration of a `Pair` and there are two arguments of type `int` and `int`, so using the deduction guide, I should deduce this to be a `Pair<int, int>`".
         - C++20 added the ability for the compiler to automatically generate deduction guides for aggregates, so deduction guides should only need to be provided for C++17 compatibility.
-        - Non-aggregates don’t need deduction guides in C++17 because the presence of a constructor serves the same purpose.
+        - Non-aggregates don't need deduction guides in C++17 because the presence of a constructor serves the same purpose.
     - **Type template parameters with default values**
     
     ```cpp
     template <typename T=int, typename U=int> // default T and U to type int
     ```
     
-- **Alias templates**
+- **[[Alias Templates]]**
     - Creating a type alias for a class template where all template arguments are explicitly specified works just like a normal type alias
         
         ```cpp
