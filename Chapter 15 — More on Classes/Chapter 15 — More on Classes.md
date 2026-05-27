@@ -1,3 +1,32 @@
+---
+tags:
+  - cpp/classes
+  - cpp/oop
+  - cpp/templates
+  - cpp/static
+  - cpp/friends
+  - concept
+  - syntax
+  - best-practice
+  - chapter
+aliases:
+  - More on Classes
+  - Ch15
+up: LearnCPP
+related:
+  - "[[this Pointer]]"
+  - "[[Member Function Chaining]]"
+  - "[[Classes and Header Files]]"
+  - "[[Nested Types]]"
+  - "[[Destructors]]"
+  - "[[Class Template Member Functions]]"
+  - "[[Static Member Variables]]"
+  - "[[Static Member Functions]]"
+  - "[[Friend Functions]]"
+  - "[[Friend Classes]]"
+  - "[[Ref Qualifiers]]"
+---
+
 # Chapter 15 — More on Classes
 
 Pin: No
@@ -7,8 +36,8 @@ Last edited: May 26, 2026 9:26 PM
 
 ## Notes
 
-- **“this” pointer**
-    - Inside every member function, the keyword **this** is a const pointer that holds the address of the current implicit object.
+- **[[this Pointer]]**
+    - Inside every member function, the keyword **this** is a const pointer that holds the address of the current implicit object.
     
     ```cpp
     simple.setID(2);
@@ -18,10 +47,10 @@ Last edited: May 26, 2026 9:26 PM
     static void setID(Simple* const this, int id) { this->m_id = id; }
     ```
     
-    - The `static` keyword means the function is not associated with objects of the class, but instead is treated as if it were a normal function inside the scope region of the class.
-    - **`this` always points to the object being operated on**
-- **Member Function Chaining**
-    - **Returning `*this`**
+    - The `static` keyword means the function is not associated with objects of the class, but instead is treated as if it were a normal function inside the scope region of the class.
+    - **`this` always points to the object being operated on**
+- **[[Member Function Chaining]]**
+    - **Returning `*this`**
     
     ```cpp
     class Calc
@@ -51,14 +80,14 @@ Last edited: May 26, 2026 9:26 PM
     }
     ```
     
-    - With const member functions, `this` is a const pointer to a const value (meaning the pointer cannot be pointed at something else, nor may the object being pointed to be modified).
-- **Classes and header files**
-    - Member functions can be defined outside the class definition just like non-member functions. The only difference is that we must prefix the member function names with the name of the class type (in this case, `Date::`) so the compiler knows we’re defining a member of that class type rather than a non-member.
+    - With const member functions, `this` is a const pointer to a const value (meaning the pointer cannot be pointed at something else, nor may the object being pointed to be modified).
+- **[[Classes and Header Files]]**
+    - Member functions can be defined outside the class definition just like non-member functions. The only difference is that we must prefix the member function names with the name of the class type (in this case, `Date::`) so the compiler knows we're defining a member of that class type rather than a non-member.
     - Define the declarations of a class within a header (.h) file and implement the function within a cpp file.
-    - member functions defined outside the class definition can be left in the header file if they are made inline (using the `inline` keyword)
+    - member functions defined outside the class definition can be left in the header file if they are made inline (using the `inline` keyword)
     - Functions defined inside the class definition are implicitly inline, which allows them to be #included into multiple code files without violating the ODR.
     - Put any default arguments for member functions inside the class definition.
-- **Nested types (member types)**
+- **[[Nested Types]]**
     - To create a nested type, you simply define the type inside the class, under the appropriate access specifier.
     
     ```cpp
@@ -99,11 +128,11 @@ Last edited: May 26, 2026 9:26 PM
     ```
     
     - It is fairly uncommon for classes to have other classes as a nested type, but it is possible.
-        - a nested class does not have access to the `this` pointer of the outer (containing) class, so nested classes can not directly access the members of the outer class.
+        - a nested class does not have access to the `this` pointer of the outer (containing) class, so nested classes can not directly access the members of the outer class.
         - However, because nested classes are members of the outer class, they can access any private members of the outer class that are in scope.
     - A nested type can be forward declared within the class that encloses it.
         - a nested type cannot be forward declared prior to the definition of the enclosing class.
-- **Destructors**
+- **[[Destructors]]**
     - Destructors are designed to allow a class to do any necessary clean up before an object of the class is destroyed.
     - Rules:
         1. The destructor must have the same name as the class, preceded by a tilde (~).
@@ -121,7 +150,7 @@ Last edited: May 26, 2026 9:26 PM
     - If a non-aggregate class type object has no user-declared destructor, the compiler will generate a destructor with an empty body.
     - When using `std::exit()` , the program just ends, the local variables are not destroyed first, and because of this, no destructors will be called.
         - Unhandled exceptions will also cause the program to terminate, and may not unwind the stack before doing so. If stack unwinding does not happen, destructors will not be called prior to the termination of the program.
-- **Class templates with member functions**
+- **[[Class Template Member Functions]]**
     
     ```cpp
     template <typename T>
@@ -153,17 +182,17 @@ Last edited: May 26, 2026 9:26 PM
     ```
     
     - **Injected class names**
-        - Within the scope of a class, the unqualified name of the class is called an **injected class name**. In a class template, the injected class name serves as shorthand for the fully templated name.
+        - Within the scope of a class, the unqualified name of the class is called an **injected class name**. In a class template, the injected class name serves as shorthand for the fully templated name.
     - Any member function templates defined outside the class definition should be defined just below the class definition (in the same file).
     - Non-aggregate classes don't need deduction guides. A matching constructor gives the compiler enough info to deduce template parameters automatically.
     - The compiler needs to see both the class definition *and* the function definition together to instantiate the template. Functions from templates are implicitly inline, so including them in multiple files is fine.
-- **Static member variables**
-    - **static member variables** are shared by all objects of the class
+- **[[Static Member Variables]]**
+    - **static member variables** are shared by all objects of the class
     - **Static members are not associated with class objects**
         - Static members are global variables that live inside the scope region of the class.
-    - Because static member `s_value` exists independently of any class objects, it can be accessed directly using the class name and the scope resolution operator
-    - Note that this static member definition is not subject to access controls: you can define and initialize the value even if it’s declared as private (or protected) in the class (as definitions are not considered to be a form of access).
-    - For non-template classes, if the class is defined in a header (.h) file, the static member definition is usually placed in the associated code file for the class (e.g. `Something.cpp`).
+    - Because static member `s_value` exists independently of any class objects, it can be accessed directly using the class name and the scope resolution operator
+    - Note that this static member definition is not subject to access controls: you can define and initialize the value even if it's declared as private (or protected) in the class (as definitions are not considered to be a form of access).
+    - For non-template classes, if the class is defined in a header (.h) file, the static member definition is usually placed in the associated code file for the class (e.g. `Something.cpp`).
     
     ```cpp
     class Whatever
@@ -174,24 +203,24 @@ Last edited: May 26, 2026 9:26 PM
     ```
     
     - Inline static memeber variables can be initialized inside the class definition regardless of whether they are constant or not. This is the preferred method of defining and initializing static members.
-    - **Only static members may use type deduction (`auto` and CTAD)**
-- **Static member functions**
-    - Because static member functions are not associated with a particular object, they can be called directly by using the class name and the scope resolution operator (e.g. `Something::getValue()`). Like static member variables, they can also be called through objects of the class type, though this is not recommended.
+    - **Only static members may use type deduction (`auto` and CTAD)**
+- **[[Static Member Functions]]**
+    - Because static member functions are not associated with a particular object, they can be called directly by using the class name and the scope resolution operator (e.g. `Something::getValue()`). Like static member variables, they can also be called through objects of the class type, though this is not recommended.
     
     ```cpp
     public:
         static int getValue() { return s_value; } // static member function
     ```
     
-    - **Static member functions have no `this` pointer**
+    - **Static member functions have no `this` pointer**
     - static member functions can directly access other static members (variables or functions), but not non-static members.
     - Static member functions can also be defined outside of the class declaration. This works the same way as for normal member functions.
     - Instead of writing a class with all static members, consider writing a normal class and instantiating a global instance of it (global variables have static duration). That way the global instance can be used when appropriate, but local instances can still be instantiated if and when that is useful.
     - In general, a static class is preferable when you have static data members and/or need access controls. Otherwise, prefer a namespace.
     - **C++ does not support static constructors**
-- **Friend non-member functions**
-    - a **friend declaration** (using the `friend` keyword) can be used to tell the compiler that some other class or function is now a friend.
-        - a **friend** is a class or function (member or non-member) that has been granted full access to the private and protected members of another class.
+- **[[Friend Functions]]**
+    - a **friend declaration** (using the `friend` keyword) can be used to tell the compiler that some other class or function is now a friend.
+        - a **friend** is a class or function (member or non-member) that has been granted full access to the private and protected members of another class.
         - a class can selectively give other classes or functions full access to their members without impacting anything else.
         
         ```cpp
@@ -206,13 +235,13 @@ Last edited: May 26, 2026 9:26 PM
         }
         ```
         
-        - Note that because `print()` is a non-member function (and thus does not have an implicit object), we must explicitly pass an `Accumulator` object to `print()` to work with.
+        - Note that because `print()` is a non-member function (and thus does not have an implicit object), we must explicitly pass an `Accumulator` object to `print()` to work with.
         - **Defining a friend non-member inside a class**
             - Friend functions defined inside a class are non-member functions
         - A friend function should prefer to use the class interface over direct access whenever possible.
         - **Prefer non-friend functions to friend functions**
-- **Friend classes and friend member functions**
-    - A **friend class** is a class that can access the private and protected members of another class.
+- **[[Friend Classes]]**
+    - A **friend class** is a class that can access the private and protected members of another class.
     - Class friendship is also not transitive. If class A is a friend of B, and B is a friend of C, that does not mean A is a friend of C.
         - Nor is friendship inherited. If class A makes B a friend, classes derived from B are not friends of A.
     - **Friend member functions**
@@ -224,8 +253,8 @@ Last edited: May 26, 2026 9:26 PM
         ```
         
         - Define the display class first, and have a forward declaration if needed, and then you can friend the member function
-- **Ref qualifiers**
-    - C++11 introduced a little known feature called a **ref-qualifier** that allows us to overload a member function based on whether it is being called on an lvalue or an rvalue implicit object.
+- **[[Ref Qualifiers]]**
+    - C++11 introduced a little known feature called a **ref-qualifier** that allows us to overload a member function based on whether it is being called on an lvalue or an rvalue implicit object.
     - we only want one function to service two different cases (one where our implicit object is an lvalue, and one where our implicit object is an rvalue).
     
     ```cpp
@@ -233,7 +262,7 @@ Last edited: May 26, 2026 9:26 PM
     std::string        getName() const && { return m_name; } // && qualifier overloads function to match only rvalue implicit objects, returns by value
     ```
     
-    - instead of having the rvalue getter return a (possibly expensive) copy of the member, we can have it try to move the member (using `std::move`).
+    - instead of having the rvalue getter return a (possibly expensive) copy of the member, we can have it try to move the member (using `std::move`).
     
     ```cpp
     // If the implicit object is a non-const rvalue, use std::move to try to move m_name
@@ -242,6 +271,5 @@ Last edited: May 26, 2026 9:26 PM
     
     - non-ref-qualified overloads and ref-qualified overloads cannot coexist.
     - if only a const lvalue-qualified function exists, it will accept either lvalue or rvalue implicit objects.
-    - either qualified overload can be explicitly deleted (using `= delete`), which prevents calls to that function.
+    - either qualified overload can be explicitly deleted (using `= delete`), which prevents calls to that function.
     - not recommending the use of ref-qualifiers as a best practice. Instead, we recommend always using the result of an access function immediately and not saving returned references for use later.
-    -
