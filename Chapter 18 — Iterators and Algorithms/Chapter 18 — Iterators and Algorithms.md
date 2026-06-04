@@ -1,4 +1,23 @@
-# Chapter 18 - Iterators and Algorithms(In Construction)
+---
+tags:
+  - cpp/iterators
+  - cpp/algorithms
+  - cpp/containers
+  - concept
+  - syntax
+  - best-practice
+  - chapter
+aliases:
+  - Iterators and Algorithms
+  - Ch18
+up: LearnCPP
+related:
+  - "[[Iterators]]"
+  - "[[Standard Library Algorithms]]"
+  - "[[Code Timing]]"
+---
+
+# Chapter 18 — Iterators and Algorithms
 
 Pin: No
 Fav: No
@@ -7,8 +26,8 @@ Last edited: June 4, 2026 6:32 PM
 
 ## Notes
 
-- **Sorting an array**
-    - `std::sort` lives in the <algorithm> header, and can be invoked on an array
+- **[[Standard Library Algorithms|Sorting an array]]**
+    - `std::sort` lives in the <algorithm> header, and can be invoked on an array
         
         ```cpp
         	int array[]{ 30, 50, 20, 10, 40 };
@@ -17,8 +36,8 @@ Last edited: June 4, 2026 6:32 PM
         
         ```
         
-- **Iterators**
-    - An **iterator** is an object designed to traverse through a container (e.g. the values in an array, or the characters in a string), providing access to each element along the way.
+- **[[Iterators]]**
+    - An **iterator** is an object designed to traverse through a container (e.g. the values in an array, or the characters in a string), providing access to each element along the way.
     - **Pointers as an iterator**
         
         ```cpp
@@ -35,13 +54,13 @@ Last edited: June 4, 2026 6:32 PM
             }
         ```
         
-    - `std::begin` and `std::end` for C-style arrays are defined in the <iterator> header.
-        - `std::begin` and `std::end` for containers that support iterators are defined in the header files for those containers (e.g. <array>, <vector>).
-    - With iterators, it is conventional to use `operator!=` to test whether the iterator has reached the end element
-    - iterators can be left “dangling” if the elements being iterated over change address or are destroyed
-        - iterator has been **invalidated**.
-    - The `erase()` function returns an iterator to the element one past the erased element
-- **standard library algorithms**
+    - `std::begin` and `std::end` for C-style arrays are defined in the <iterator> header.
+        - `std::begin` and `std::end` for containers that support iterators are defined in the header files for those containers (e.g. <array>, <vector>).
+    - With iterators, it is conventional to use `operator!=` to test whether the iterator has reached the end element
+    - iterators can be left "dangling" if the elements being iterated over change address or are destroyed
+        - iterator has been **invalidated**.
+    - The `erase()` function returns an iterator to the element one past the erased element
+- **[[Standard Library Algorithms|standard library algorithms]]**
     - `std::find` searches for the first occurrence of a value in a container.
         - an iterator to the starting element in the sequence, an iterator to the ending element in the sequence, and a value to search for.
         - returns an iterator pointing to the element (if it is found) or the end of the container (if the element is not found).
@@ -93,7 +112,7 @@ Last edited: June 4, 2026 6:32 PM
             std::sort(arr.begin(), arr.end(), greater);
         ```
         
-        - C++ provides a custom type (named `std::greater`
+        - C++ provides a custom type (named `std::greater`
     - **Using std::for_each to do something to all elements of a container**
         
         ```cpp
@@ -111,14 +130,13 @@ Last edited: June 4, 2026 6:32 PM
         
     - **Performance and order of execution**
         - Before using a particular algorithm, make sure performance and execution order guarantees work for your particular use case.
-    - C++20 adds *ranges*, which allow us to simply pass `arr`. This will make our code even shorter and more readable.
+    - C++20 adds *ranges*, which allow us to simply pass `arr`. This will make our code even shorter and more readable.
     - Favor using functions from the algorithms library over writing your own functionality to do the same thing.
-- **Timing your code**
+- **[[Code Timing|Timing your code]]**
     - **Things that can impact the performance of your program**
-        - make sure you’re using a release build target, not a debug build target
-        - Make sure your system isn’t doing anything CPU, memory, or hard drive intensive (e.g. playing a game, searching for a file, running an antivirus scan, or installing a update in the background)
+        - make sure you're using a release build target, not a debug build target
+        - Make sure your system isn't doing anything CPU, memory, or hard drive intensive (e.g. playing a game, searching for a file, running an antivirus scan, or installing a update in the background)
         - if your program uses a random number generator, the particular sequence of random numbers generated may impact timing.
-        - make sure you’re not timing waiting for user input, as how long the user takes to input something should not be part of your timing considerations
+        - make sure you're not timing waiting for user input, as how long the user takes to input something should not be part of your timing considerations
     - **Measuring performance**
         - When measuring the performance of your program, gather at least 3 results.
-        -
