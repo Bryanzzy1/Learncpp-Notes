@@ -1,30 +1,59 @@
+---
+tags:
+  - cpp/operators
+  - cpp/classes
+  - cpp/oop
+  - concept
+  - syntax
+  - best-practice
+  - chapter
+aliases:
+  - Operator Overloading
+  - Ch21
+up: LearnCPP
+related:
+  - "[[Operator Overloading]]"
+  - "[[Friend Function Overloads]]"
+  - "[[Normal Function Overloads]]"
+  - "[[Member Function Overloads]]"
+  - "[[Operator Overload Selection Guide]]"
+  - "[[Overloading IO Operators|Overloading I/O Operators]]"
+  - "[[Overloading Comparison Operators]]"
+  - "[[Overloading Increment and Decrement]]"
+  - "[[Overloading the Subscript Operator]]"
+  - "[[Overloading the Parenthesis Operator]]"
+  - "[[Overloading Typecasts]]"
+  - "[[Overloading the Assignment Operator]]"
+  - "[[Shallow vs Deep Copying]]"
+  - "[[Operators and Function Templates]]"
+---
+
 # Chapter 21 — Operator Overloading
 
 Pin: No
 Fav: No
-Category: Done (https://app.notion.com/p/Done-24fb13b569b5836bb160816e5fa04870?pvs=21)
 Created: April 13, 2026 8:45 PM
 Last edited: June 11, 2026 3:14 PM
 
 ## Notes
 
-- **Operator Overloading**
+- **[[Operator Overloading]]**
     - If all of the operands are fundamental data types, the compiler will call a built-in routine if one exists. If one does not exist, the compiler will produce a compiler error.
-    - If *any* of the operands are program-defined types (e.g. one of your classes, or an enum type), the compiler will use the function overload resolution algorithm
+    - If *any* of the operands are program-defined types (e.g. one of your classes, or an enum type), the compiler will use the function overload resolution algorithm
         - It may also involve implicitly converting program-defined types into fundamental types (via an overloaded typecast,
     - You can only overload the operators that exist.
-    - At least one of the operands in an overloaded operator must be a user-defined type. This means you could overload `operator+(int, Mystring)`, but not `operator+(int, double)`.
+    - At least one of the operands in an overloaded operator must be a user-defined type. This means you could overload `operator+(int, Mystring)`, but not `operator+(int, double)`.
     - It is not possible to change the number of operands an operator supports.
-    - When overloading operators, it’s best to keep the function of the operators as close to the original intent of the operators as possible.
+    - When overloading operators, it's best to keep the function of the operators as close to the original intent of the operators as possible.
     - Operators that do not modify their operands (e.g. arithmetic operators) should generally return results by value.
         - Operators that modify their leftmost operand (e.g. pre-increment, any of the assignment operators) should generally return the leftmost operand by reference.
-- **Overloading the arithmetic operators using friend functions**
+- **[[Friend Function Overloads]]**
     - Overloading operators using friend functions
     - Friend functions can be defined inside the class
-- **Overloading operators using normal functions**
-    - Similar to the friend function but you don’t get access to the private memebers, so use a access function.
-    - Prefer overloading operators as normal functions instead of friends if it’s possible to do so without adding additional functions.
-- **Overloading the I/O operators**
+- **[[Normal Function Overloads]]**
+    - Similar to the friend function but you don't get access to the private memebers, so use a access function.
+    - Prefer overloading operators as normal functions instead of friends if it's possible to do so without adding additional functions.
+- **[[Overloading IO Operators|Overloading I/O Operators]]**
     
     ```cpp
     std::ostream& operator<< (std::ostream& out, const Point& point)
@@ -37,7 +66,7 @@ Last edited: June 11, 2026 3:14 PM
     ```
     
     - It is also possible to overload the input operator (Operator >>)
-        - The key thing you need to know is that `std::cin` is an object of type `std::istream`.
+        - The key thing you need to know is that `std::cin` is an object of type `std::istream`.
         
         ```cpp
         // note that point must be non-const so we can modify the object
@@ -51,7 +80,7 @@ Last edited: June 11, 2026 3:14 PM
         ```
         
         - **Guarding against partial extraction**
-            - A **transactional operation** must either completely succeed or completely fail
+            - A **transactional operation** must either completely succeed or completely fail
             
             ```cpp
             // note that point must be non-const so we can modify the object
@@ -70,7 +99,7 @@ Last edited: June 11, 2026 3:14 PM
             ```
             
         - Also need to verify/handle invalid semantic input
-- **Overloading operators using member functions**
+- **[[Member Function Overloads]]**
     - When overloading an operator using a member function:
         - The overloaded operator must be added as a member function of the left operand.
         - The left operand becomes the implicit *this object
@@ -90,13 +119,13 @@ Last edited: June 11, 2026 3:14 PM
         - The assignment (=), subscript ([]), function call (()), and member selection (->) operators must be overloaded as member functions, because the language requires them to be.
     - **Not everything can be overloaded as a member function**
         - not able to overload operator<< as a member function.
-- **When to use a normal, friend, or member function overload:**
-    - If you’re overloading assignment (=), subscript ([]), function call (()), or member selection (->), do so as a member function.
-    - If you’re overloading a unary operator, do so as a member function.
-    - If you’re overloading a binary operator that does not modify its left operand (e.g. operator+), do so as a normal function (preferred) or friend function.
-    - If you’re overloading a binary operator that modifies its left operand, but you can’t add members to the class definition of the left operand (e.g. operator<<, which has a left operand of type ostream), do so as a normal function (preferred) or friend function.
-    - If you’re overloading a binary operator that modifies its left operand (e.g. operator+=), and you can modify the definition of the left operand, do so as a member function.
-- **Overloading the comparison operators**
+- **[[Operator Overload Selection Guide]]**
+    - If you're overloading assignment (=), subscript ([]), function call (()), or member selection (->), do so as a member function.
+    - If you're overloading a unary operator, do so as a member function.
+    - If you're overloading a binary operator that does not modify its left operand (e.g. operator+), do so as a normal function (preferred) or friend function.
+    - If you're overloading a binary operator that modifies its left operand, but you can't add members to the class definition of the left operand (e.g. operator<<, which has a left operand of type ostream), do so as a normal function (preferred) or friend function.
+    - If you're overloading a binary operator that modifies its left operand (e.g. operator+=), and you can modify the definition of the left operand, do so as a member function.
+- **[[Overloading Comparison Operators]]**
     - Only define overloaded operators that make intuitive sense for your class.
     - **Minimizing comparative redundancy**
         - operator!= can be implemented as !(operator==)
@@ -109,7 +138,7 @@ Last edited: June 11, 2026 3:14 PM
             - Return < 0 if left is smaller
             - > 0 if right is smaller
             - == 0 if equal
-- **Overloading the increment and decrement operators**
+- **[[Overloading Increment and Decrement]]**
     - **Overloading prefix increment and decrement**
         
         ```cpp
@@ -149,7 +178,7 @@ Last edited: June 11, 2026 3:14 PM
         ```
         
     - Note that the prefix and postfix operators do the same job -- they both increment or decrement the object.
-- **Overloading the subscript operator**
+- **[[Overloading the Subscript Operator]]**
     - **Overloading operator[]**
         
         ```cpp
@@ -191,13 +220,13 @@ Last edited: June 11, 2026 3:14 PM
                 ```
                 
         - Detect index validity
-        - Pointers to objects and overloaded operator[] don’t mix
+        - Pointers to objects and overloaded operator[] don't mix
         - **The function parameter does not need to be an integral type**
-- **Overloading the parenthesis operator**
+- **[[Overloading the Parenthesis Operator]]**
     - The parenthesis operator (operator()) is a particularly interesting operator in that it allows you to vary both the type AND number of parameters it takes.
-    - Operator() is also commonly overloaded to implement **functors** (or **function object**), which are classes that operate like functions.
+    - Operator() is also commonly overloaded to implement **functors** (or **function object**), which are classes that operate like functions.
         - The advantage of a functor over a normal function is that functors can store data in member variables (since they are classes).
-- **Overloading typecasts**
+- **[[Overloading Typecasts]]**
     - Such a typecast can be used explicitly (via a cast) or implicitly by the compiler to perform conversions as needed.
     
     ```cpp
@@ -219,7 +248,7 @@ Last edited: June 11, 2026 3:14 PM
         - If B is a class type you can modify, prefer using a converting constructor to create B from A.
         - Otherwise, if A is a class type you can modify, use an overloaded typecast to convert A to B.
         - Otherwise use a non-member function to convert A to B.
-- **Overloading the assignment operator**
+- **[[Overloading the Assignment Operator]]**
     - **Copy assignment vs Copy constructor**
         - the copy constructor initializes new objects, whereas the assignment operator replaces the contents of existing objects.
     - The copy assignment operator must be overloaded as a member function.
@@ -263,10 +292,10 @@ Last edited: June 11, 2026 3:14 PM
                 }
             ```
             
-- **Shallow vs. deep copying**
-    - The default copy constructor and default assignment operators it provides use a copying method known as a memberwise copy (also known as a **shallow copy**).
-    - A **deep copy** allocates memory for the copy and then copies the actual value, so that the copy lives in distinct memory from the source.
-- **Overloading operators and function templates**
+- **[[Shallow vs Deep Copying]]**
+    - The default copy constructor and default assignment operators it provides use a copying method known as a memberwise copy (also known as a **shallow copy**).
+    - A **deep copy** allocates memory for the copy and then copies the actual value, so that the copy lives in distinct memory from the source.
+- **[[Operators and Function Templates]]**
     
     ```cpp
     template <typename T>
