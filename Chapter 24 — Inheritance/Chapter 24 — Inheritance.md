@@ -1,3 +1,27 @@
+---
+tags:
+  - cpp/classes
+  - cpp/oop
+  - cpp/inheritance
+  - concept
+  - syntax
+  - best-practice
+  - chapter
+aliases:
+  - Inheritance
+  - Ch24
+up: LearnCPP
+related:
+  - "[[Basic Inheritance]]"
+  - "[[Derived Class Constructors]]"
+  - "[[Inheritance and Access Specifiers]]"
+  - "[[Adding Functionality to Derived Classes]]"
+  - "[[Overriding Inherited Functions]]"
+  - "[[Hiding Inherited Functionality]]"
+  - "[[Multiple Inheritance]]"
+  - "[[Mixins]]"
+---
+
 # Chapter 24 — Inheritance
 
 Pin: No
@@ -20,8 +44,8 @@ public:
 
 ## Notes
 
-- **Basic Inheritance**
-    - the class being inherited from is called the **parent class**, **base class**, or **superclass**, and the class doing the inheriting is called the **child class**, **derived class**, or **subclass**.
+- **[[Basic Inheritance]]**
+    - the class being inherited from is called the **parent class**, **base class**, or **superclass**, and the class doing the inheriting is called the **child class**, **derived class**, or **subclass**.
     
     ```cpp
     // BaseballPlayer publicly inheriting Person
@@ -33,14 +57,14 @@ public:
     - **Order of construction of derived classes**
         - As you can see, when we constructed Derived, the Base portion of Derived got constructed first.
         - C++ constructs derived classes in phases, starting with the most-base class (at the top of the inheritance tree) and finishing with the most-child class (at the bottom of the inheritance tree). As each class is constructed, the appropriate constructor from that class is called to initialize that part of the class.
-- **Constructors and initialization of derived classes**
-    - Here’s what actually happens when base is instantiated:
+- **[[Derived Class Constructors]]**
+    - Here's what actually happens when base is instantiated:
         1. Memory for base is set aside
         2. The appropriate Base constructor is called
         3. The member initializer list initializes variables
         4. The body of the constructor executes
         5. Control is returned to the caller
-    - Here’s what actually happens when derived is instantiated:
+    - Here's what actually happens when derived is instantiated:
         1. Memory for derived is set aside (enough for both the Base and Derived portions)
         2. The appropriate Derived constructor is called
         3. **The Base object is constructed first using the appropriate Base constructor**. If no base constructor is specified, the default constructor will be used.
@@ -58,9 +82,9 @@ public:
         ```
         
         - Fortunately, C++ gives us the ability to explicitly choose which Base class constructor will be called
-    - When a derived class is destroyed, each destructor is called in the *reverse* order of construction. In the above example, when c is destroyed, the C destructor is called first, then the B destructor, then the A destructor.
-- **Inheritance and access specifiers**
-    - The **protected** access specifier allows the class the member belongs to, friends, and derived classes to access the member.
+    - When a derived class is destroyed, each destructor is called in the *reverse* order of construction. In the above example, when c is destroyed, the C destructor is called first, then the B destructor, then the A destructor.
+- **[[Inheritance and Access Specifiers]]**
+    - The **protected** access specifier allows the class the member belongs to, friends, and derived classes to access the member.
     
     ```cpp
     class Base
@@ -100,25 +124,15 @@ public:
         - If you do not choose an inheritance type, C++ defaults to private inheritance
         - when members are inherited, the access specifier for an inherited member may be changed (in the derived class only) depending on the type of inheritance used.
             - members that were public or protected in the base class may change access specifiers in the derived class.
-        - Public Inheritance(Claude code put this into bullet points for the code block below, remove this parenthesis and its content after you are done)
-            
-            ```cpp
-                // Public inheritance means:
-                // Public inherited members stay public (so m_public is treated as public)
-                // Protected inherited members stay protected (so m_protected is treated as protected)
-                // Private inherited members stay inaccessible (so m_private is inaccessible)
-            ```
-            
+        - Public Inheritance:
+            - Public inherited members stay public
+            - Protected inherited members stay protected
+            - Private inherited members stay inaccessible
             - Use public inheritance unless you have a specific reason to do otherwise.
-        - Private Inheritance(Claude code put this into bullet points for the code block below, remove this parenthesis and its content after you are done)
-        
-        ```cpp
-            // Private inheritance means:
-            // Public inherited members become private (so m_public is treated as private)
-            // Protected inherited members become private (so m_protected is treated as private)
-            // Private inherited members stay inaccessible (so m_private is inaccessible)
-        ```
-        
+        - Private Inheritance:
+            - Public inherited members become private
+            - Protected inherited members become private
+            - Private inherited members stay inaccessible
         - With protected inheritance, the public and protected members become protected, and private members stay inaccessible.
             - Use very rarely
     - First, a class (and friends) can always access its own non-inherited members. The access specifiers only affect whether outsiders and derived classes can access those members.
@@ -129,9 +143,9 @@ public:
     | Public | Public | Private | Protected |
     | Protected | Protected | Private | Protected |
     | Private | Inaccessible | Inaccessible | Inaccessible |
-- **Adding new functionality to a derived class**
+- **[[Adding Functionality to Derived Classes]]**
     - Just define the function in the derived
-- **Calling inherited functions and overriding behavior**
+- **[[Overriding Inherited Functions]]**
     - You can redefined base function by overriding it in the derived class
     - Adding to existing functionalities:
         
@@ -157,12 +171,10 @@ public:
         };
         ```
         
-        - Calling function `identify()` without a scope resolution qualifier would default to the `identify()` in the current class, which would be `Derived::identify()`
+        - Calling function `identify()` without a scope resolution qualifier would default to the `identify()` in the current class, which would be `Derived::identify()`
     - **Overload resolution in derived classes**
         
         ```cpp
-        #include <iostream>
-        
         class Base
         {
         public:
@@ -186,7 +198,7 @@ public:
         }
         ```
         
-- **Hiding inherited functionality**
+- **[[Hiding Inherited Functionality]]**
     
     ```cpp
     class Derived : public Base
@@ -226,7 +238,7 @@ public:
     
     - **Deleting functions in the derived class**
         - `int getValue() const = delete; // mark this function as inaccessible`
-- **Multiple inheritance**
+- **[[Multiple Inheritance]]**
     - Enables a derived class to inherit members from more than one parent.
     
     ```cpp
@@ -244,7 +256,7 @@ public:
     };
     ```
     
-    - **Mixins**
+    - **[[Mixins]]**
         - a small class that can be inherited from in order to add properties to a class.
         
         ```cpp
@@ -259,11 +271,9 @@ public:
         };
         ```
         
-        - a derived class can inherit from a mixin base class using the derived class as a template type parameter. Such inheritance is called **Curiously Recurring Template Pattern** (CRTP for short), which looks like this:
+        - a derived class can inherit from a mixin base class using the derived class as a template type parameter. Such inheritance is called **Curiously Recurring Template Pattern** (CRTP for short), which looks like this:
             
             ```cpp
-            // The Curiously Recurring Template Pattern (CRTP)
-            
             template <class T>
             class Mixin
             {
