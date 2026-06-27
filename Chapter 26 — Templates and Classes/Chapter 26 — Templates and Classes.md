@@ -1,4 +1,25 @@
-# Chapter 26 - Templates and Classes
+---
+tags:
+  - cpp/templates
+  - cpp/classes
+  - concept
+  - syntax
+  - best-practice
+  - chapter
+aliases:
+  - Templates and Classes
+  - Ch26
+up: LearnCPP
+related:
+  - "[[Template Classes]]"
+  - "[[Template Non-type Parameters in Classes]]"
+  - "[[Function Template Specialization]]"
+  - "[[Class Template Specialization]]"
+  - "[[Partial Template Specialization]]"
+  - "[[Partial Template Specialization for Pointers]]"
+---
+
+# Chapter 26 — Templates and Classes
 
 Pin: No
 Fav: No
@@ -7,9 +28,9 @@ Last edited: June 25, 2026 4:21 PM
 
 ## Notes
 
-- **Template classes**
+- **[[Template Classes]]**
     - Similar to function templates and can be split to a header and cpp files for defining member functions
-- **Template non-type parameters**
+- **[[Template Non-type Parameters in Classes]]**
     - **Non-type parameters**
         - An integral type
         - An enumeration type
@@ -38,9 +59,9 @@ Last edited: June 25, 2026 4:21 PM
     ```
     
     - Non type arguments must be constexpr
-- **Function template specialization**
-    - **Explicit template specialization** (often shortened to **template specialization**) is a feature that allows us to explicitly define different implementations of a template for specific types or values.
-    - When all of the template parameters are specialized, it is called a **full specialization**. When only some of the template parameters are specialized, it is called a **partial specialization**.
+- **[[Function Template Specialization]]**
+    - **Explicit template specialization** (often shortened to **template specialization**) is a feature that allows us to explicitly define different implementations of a template for specific types or values.
+    - When all of the template parameters are specialized, it is called a **full specialization**. When only some of the template parameters are specialized, it is called a **partial specialization**.
     
     ```cpp
     // A full specialization of primary template print<T> for type double
@@ -52,7 +73,7 @@ Last edited: June 25, 2026 4:21 PM
     }
     ```
     
-- **Class template specialization**
+- **[[Class Template Specialization]]**
     
     ```cpp
     // First define our non-specialized class template
@@ -84,25 +105,19 @@ Last edited: June 25, 2026 4:21 PM
         std::uint8_t m_data{};
     
     public:
-        // Don't worry about the details of the implementation of these functions
         void set(int index, bool value)
         {
-            // Figure out which bit we're setting/unsetting
-            // This will put a 1 in the bit we're interested in turning on/off
             auto mask{ 1 << index };
     
-            if (value)  // If we're setting a bit
-                m_data |= mask;   // use bitwise-or to turn that bit on
-            else  // if we're turning a bit off
-                m_data &= ~mask;  // bitwise-and the inverse mask to turn that bit off
+            if (value)
+                m_data |= mask;
+            else
+                m_data &= ~mask;
     	}
     
         bool get(int index)
         {
-            // Figure out which bit we're getting
             auto mask{ 1 << index };
-            // bitwise-and to get the value of the bit we're interested in
-            // Then implicit cast to boolean
             return (m_data & mask);
         }
     }
@@ -111,6 +126,6 @@ Last edited: June 25, 2026 4:21 PM
     - **Specializing member functions**
         - Same syntax as function template specialization but since explicit function specialization is not implicitly inline, we should mark it as inline if put in a header
     - Specialized classes and functions are often defined in a header file just below the definition of the non-specialized class, so that including a single header includes both the non-specialized class and any specializations.
-- **Partial template specialization**
+- **[[Partial Template Specialization]]**
     - allows us to specialize classes (but not individual functions!)
-- **Partial template specialization for pointers**
+- **[[Partial Template Specialization for Pointers]]**
