@@ -1,3 +1,29 @@
+---
+tags:
+  - cpp/error-handling
+  - cpp/exceptions
+  - concept
+  - syntax
+  - best-practice
+  - chapter
+aliases:
+  - Exceptions
+  - Ch27
+up: LearnCPP
+related:
+  - "[[Basic Exception Handling]]"
+  - "[[Stack Unwinding]]"
+  - "[[Uncaught Exceptions]]"
+  - "[[Catch-All Handler]]"
+  - "[[Exception Classes]]"
+  - "[[std-exception|std::exception]]"
+  - "[[Rethrowing Exceptions]]"
+  - "[[Function Try Blocks]]"
+  - "[[Exception Dangers]]"
+  - "[[noexcept]]"
+  - "[[std-move-if-noexcept|std::move_if_noexcept]]"
+---
+
 # Chapter 27 — Exceptions
 
 Pin: No
@@ -7,8 +33,8 @@ Last edited: June 27, 2026 5:13 PM
 
 ## Notes
 
-- **Basic exception handling**
-    - In C++, a **throw statement** is used to signal that an exception or error case has occurred (think of throwing a penalty flag). Signaling that an exception has occurred is also commonly called **raising** an exception.
+- **[[Basic Exception Handling]]**
+    - In C++, a **throw statement** is used to signal that an exception or error case has occurred (think of throwing a penalty flag). Signaling that an exception has occurred is also commonly called **raising** an exception.
     
     ```cpp
     throw -1; // throw a literal integer value
@@ -18,7 +44,7 @@ Last edited: June 27, 2026 5:13 PM
     throw MyException("Fatal Error"); // Throw an object of class MyException
     ```
     
-    - In C++, we use the **try** keyword to define a block of statements (called a **try block**). The try block acts as an observer, looking for any exceptions that are thrown by any of the statements within the try block.
+    - In C++, we use the **try** keyword to define a block of statements (called a **try block**). The try block acts as an observer, looking for any exceptions that are thrown by any of the statements within the try block.
     
     ```cpp
     try
@@ -28,7 +54,7 @@ Last edited: June 27, 2026 5:13 PM
     }
     ```
     
-    - Actually handling exceptions is the job of the catch block(s). The **catch** keyword is used to define a block of code (called a **catch block**) that handles exceptions for a single data type.
+    - Actually handling exceptions is the job of the catch block(s). The **catch** keyword is used to define a block of code (called a **catch block**) that handles exceptions for a single data type.
     
     ```cpp
     catch (int x)
@@ -38,18 +64,18 @@ Last edited: June 27, 2026 5:13 PM
     }
     ```
     
-    - When an exception is raised (using **throw**), the running program finds the nearest enclosing **try** block (propagating up the stack if necessary to find an enclosing try block -- we’ll discuss this in more detail next lesson) to see if any of the **catch** handlers attached to the try block can handle that type of exception. If so, execution jumps to the top of the catch block, the exception is considered handled.
+    - When an exception is raised (using **throw**), the running program finds the nearest enclosing **try** block (propagating up the stack if necessary to find an enclosing try block -- we'll discuss this in more detail next lesson) to see if any of the **catch** handlers attached to the try block can handle that type of exception. If so, execution jumps to the top of the catch block, the exception is considered handled.
     - **Exceptions are handled immediately**
-- **Exceptions, functions, and stack unwinding**
+- **[[Stack Unwinding]]**
     - Try blocks catch exceptions not only from statements within the try block, but also from functions that are called within the try block.
     - Unwinding the stack destroys local variables in the functions that are unwound (which is good, because it ensures their destructors execute).
         - Keeping going up the call stack to see if any function can handle the throw
         - If a matching exception handler is found, then execution jumps from the point where the exception is thrown to the top of the matching catch block
-- **Uncaught exceptions and catch-all handlers**
+- **[[Uncaught Exceptions]]**
     - When no exception handler for a function can be found, std::terminate() is called, and the application is terminated.
         - The call stack may or may not be unwound if an exception is unhandled.
         - If the stack is not unwound, local variables will not be destroyed, which may cause problems if those variables have non-trivial destructors.
-    - **Catch-all handlers**
+    - **[[Catch-All Handler]]**
         
         ```cpp
         #include <iostream>
@@ -87,7 +113,7 @@ Last edited: June 27, 2026 5:13 PM
         #endif
         ```
         
-- **Exceptions, classes, and inheritance**
+- **[[Exception Classes]]**
     - **Exceptions and member functions**
         - throw instead of assert
     - Constructors are another area of classes in which exceptions can be very useful.
@@ -115,14 +141,13 @@ Last edited: June 27, 2026 5:13 PM
         - Exceptions of a class type should be caught by (const) reference to prevent expensive copying and slicing.
     - **Exceptions and inheritance**
         - Handlers for derived exception classes should be listed before those for base classes.
-    - **std::exception**
+    - **[[std-exception|std::exception]]**
         - a small interface class designed to serve as a base class to any exception thrown by the C++ standard library.
         
         ```cpp
             try
             {
                 // Your code using standard library goes here
-                // We'll trigger one of these exceptions intentionally for the sake of the example
                 std::string s;
                 s.resize(std::numeric_limits<std::size_t>::max()); // will trigger a std::length_error or allocation exception
             }
@@ -153,13 +178,13 @@ Last edited: June 27, 2026 5:13 PM
             }
             ```
             
-            - std::runtime_error can take a C-style string parameter, or a `const std::string&` parameter.
+            - std::runtime_error can take a C-style string parameter, or a `const std::string&` parameter.
     - When an exception is thrown, the object being thrown is typically a temporary or local variable that has been allocated on the stack.
         - When an exception is thrown, the compiler makes a copy of the exception object to some piece of unspecified memory (outside of the call stack) reserved for handling exceptions.
     - Exception objects need to be copyable.
     - Exception objects should not keep pointers or references to stack-allocated objects.
-- **Rethrowing exceptions**
-    - Want to throw exceptions but don’t want to fully handle at the point of catching
+- **[[Rethrowing Exceptions]]**
+    - Want to throw exceptions but don't want to fully handle at the point of catching
     - This is common when you want to log an error, but pass the issue along to the caller to actually handle.
     
     ```cpp
@@ -173,7 +198,7 @@ Last edited: June 27, 2026 5:13 PM
     ```
     
     - When rethrowing the same exception, use the throw keyword by itself
-- **Function try blocks**
+- **[[Function Try Blocks]]**
     - allow you to establish an exception handler around the body of an entire function, rather than around a block of code.
     - Use function try blocks when you need a constructor to handle an exception thrown in the member initializer list.
     
@@ -211,31 +236,31 @@ Last edited: June 27, 2026 5:13 PM
     - Avoid letting control reach the end of a function-level catch block. Instead, explicitly throw, rethrow, or return.
     - A function-level catch block for a constructor must either throw a new exception or rethrow the existing exception -- they are not allowed to resolve exceptions!
     
-    | **Function type** | **Can resolve exceptionsvia return statement** | **Behavior at end of catch block** |
+    | **Function type** | **Can resolve exceptions via return statement** | **Behavior at end of catch block** |
     | --- | --- | --- |
     | Constructor | No, must throw or rethrow | Implicit rethrow |
     | Destructor | Yes | Implicit rethrow |
     | Non-value returning function | Yes | Resolve exception |
     | Value-returning function | Yes | Undefined behavior |
     - **Function try blocks can catch both base and the current class exceptions**
-    - **Don’t use function try to clean up resources**
+    - **Don't use function try to clean up resources**
     - If an exception is thrown out of a destructor during stack unwinding, the program will be halted.
-- **Exception dangers and downsides**
+- **[[Exception Dangers]]**
     - Exception handling is best used when all of the following are true:
         - The error being handled is likely to occur only infrequently.
         - The error is serious and execution could not continue otherwise.
         - The error cannot be handled at the place where it occurs.
-        - There isn’t a good alternative way to return an error code back to the caller.
+        - There isn't a good alternative way to return an error code back to the caller.
     - Exceptions do come with a small performance price to pay.
     - may also cause it to run slower due to the additional checking that has to be performed.
         - However, the main performance penalty for exceptions happens when an exception is actually thrown.
         - The stack must be unwound, and an appropriate exception handler must be found, which is a relatively expensive operation.
-- **Exception specifications and noexcept**
-    - **Exception specifications** are a language mechanism that was originally designed to document what kind of exceptions a function might throw as part of a function specification.
-    - In C++, all functions are classified as either *non-throwing* or *potentially throwing*. A **non-throwing function** is one that promises not to throw exceptions that are visible to the caller.
+- **[[noexcept]]**
+    - **Exception specifications** are a language mechanism that was originally designed to document what kind of exceptions a function might throw as part of a function specification.
+    - In C++, all functions are classified as either *non-throwing* or *potentially throwing*. A **non-throwing function** is one that promises not to throw exceptions that are visible to the caller.
         - `void doSomething() noexcept; // this function is specified as non-throwing`
-    - A **potentially throwing function** may throw exceptions that are visible to the caller.
-    - The `noexcept` specifier has an optional Boolean parameter. `noexcept(true)` is equivalent to `noexcept`, meaning the function is non-throwing. `noexcept(false)` means the function is potentially throwing.
+    - A **potentially throwing function** may throw exceptions that are visible to the caller.
+    - The `noexcept` specifier has an optional Boolean parameter. `noexcept(true)` is equivalent to `noexcept`, meaning the function is non-throwing. `noexcept(false)` means the function is potentially throwing.
         - Only in template functions
     - Functions that are implicitly non-throwing:
         - Destructors
@@ -248,18 +273,18 @@ Last edited: June 27, 2026 5:13 PM
         - User-defined constructors
         - User-defined operators
     - **The noexcept operator**
-        - takes an expression as an argument, and returns `true` or `false` if the compiler thinks it will throw an exception or not
-        - This is required to fulfill certain **exception safety guarantees**
+        - takes an expression as an argument, and returns `true` or `false` if the compiler thinks it will throw an exception or not
+        - This is required to fulfill certain **exception safety guarantees**
     - **Exception safety guarantees**
         - No guarantee -- There are no guarantees about what will happen if an exception is thrown (e.g. a class may be left in an unusable state)
         - Basic guarantee -- If an exception is thrown, no memory will be leaked and the object is still usable, but the program may be left in a modified state.
         - Strong guarantee -- If an exception is thrown, no memory will be leaked and the program state will not be changed. This means the function must either completely succeed or have no side effects if it fails. This is easy if the failure happens before anything is modified in the first place, but can also be achieved by rolling back any changes so the program is returned to the pre-failure state.
-        - No throw / No fail guarantee -- The function will always succeed (no-fail) or fail without throwing an exception that is exposed to the caller (no-throw). Exceptions may be thrown internally if not exposed. The `noexcept` specifier maps to this level of exception safety guarantee.
+        - No throw / No fail guarantee -- The function will always succeed (no-fail) or fail without throwing an exception that is exposed to the caller (no-throw). Exceptions may be thrown internally if not exposed. The `noexcept` specifier maps to this level of exception safety guarantee.
     - **Always make move constructors, move assignment, and swap functions noexcept.**
-    - Make copy constructors and copy assignment operators `noexcept` when you can.
-    - Use `noexcept` on other functions to express a no-fail or no-throw guarantee.
-    - Before C++11, and until C++17, *dynamic exception specifications* were used in place of `noexcept`. The **dynamic exception specifications** syntax uses the `throw` keyword to list which exception types a function might directly or indirectly throw:
-- **std::move_if_noexcept**
+    - Make copy constructors and copy assignment operators `noexcept` when you can.
+    - Use `noexcept` on other functions to express a no-fail or no-throw guarantee.
+    - Before C++11, and until C++17, *dynamic exception specifications* were used in place of `noexcept`. The **dynamic exception specifications** syntax uses the `throw` keyword to list which exception types a function might directly or indirectly throw:
+- **[[std-move-if-noexcept|std::move_if_noexcept]]**
     - **The problem**
         - Moving an object transfers ownership from source to destination
         - If an exception is thrown mid-move, the source object is left damaged
